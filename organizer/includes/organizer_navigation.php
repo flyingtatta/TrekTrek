@@ -1,11 +1,3 @@
-<?php
-  if (isset($_POST['submit'])) {
-    $user_email    = $_POST['user_email'];
-    $user_password = $_POST['user_password'];
-
-    loginUser($user_email, $user_password);
-}
-?>
 <div class="my-3 mx-3">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded rounded-lg">
     <a class="navbar-brand">TrekTrek</a>
@@ -28,21 +20,15 @@
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
+            Treks
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="treks.php?source=view_treks">View All Treks</a>
+            <a class="dropdown-item" href="treks.php?source=add_treks">Add Treks</a>
             <a class="dropdown-item" href="">Something else here</a>
           </div>
         </li>
 
-        <?php if (isset($_SESSION['user_role'])): ?>
-          <li class="nav-item">
-            <a class="nav-link" href="index.php">Organizer</a>
-          </li>
-        <?php endif; ?>
 
       </ul>
 
