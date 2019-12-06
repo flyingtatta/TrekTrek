@@ -1,9 +1,9 @@
 <?php
   if (isset($_POST['submit'])) {
-    $user_email = $_POST['user_email'];
+    $user_email    = $_POST['user_email'];
     $user_password = $_POST['user_password'];
 
-    $query = "SELECT * FROM users WHERE user_email = '{$user_email}' AND user_password = '{$user_password}'";
+    $query = "SELECT * FROM users WHERE user_email = '{$user_email}'";
     $login_user = mysqli_query($connection, $query);
 
     while($row = mysqli_fetch_assoc($login_user)){
@@ -16,9 +16,8 @@
       $db_user_dob         = $row['user_dob'];
       $db_user_password    = $row['user_password'];
       $db_user_role        = $row['user_role'];
-    }
 
-    if ($user_email == $db_user_email && $user_password == $db_user_password) {
+    if (password_verify($user_password, $db_user_password)) {
       $_SESSION['user_firstname']   = $db_user_firstname;
       $_SESSION['user_lastname']    = $db_user_lastname;
       $_SESSION['username']         = $db_username;
@@ -32,6 +31,7 @@
       header("Location: ./index.php");
     }
   }
+}
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
