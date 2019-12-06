@@ -34,10 +34,19 @@
             <a class="dropdown-item" href="#">Action</a>
             <a class="dropdown-item" href="#">Another action</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a class="dropdown-item" href="">Something else here</a>
           </div>
         </li>
+
+        <?php if (isset($_SESSION['user_role'])): ?>
+          <li class="nav-item">
+            <a class="nav-link" href="organizer">Add Treks</a>
+          </li>
+        <?php endif; ?>
+
       </ul>
+
+
 
       <?php if (!isset($_SESSION['user_email'])): ?>
         <form class="form-inline" action="" method="post">
