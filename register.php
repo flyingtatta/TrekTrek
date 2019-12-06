@@ -2,6 +2,7 @@
   include 'includes/header.php';
   session_start();
 ?>
+<?php include 'includes/functions.php'; ?>
 <?php include 'includes/navigation.php'; ?>
 
 <?php
@@ -16,21 +17,9 @@
     $user_dob         = mysqli_real_escape_string($connection, $_POST['user_dob']);
     $user_password    = mysqli_real_escape_string($connection, $_POST['user_password']);
 
-    move_uploaded_file($tmp_user_image, "images/$user_image");
+    registerUser($user_firstname, $user_lastname, $username, $user_email, $user_phonenumber, $user_image, $tmp_user_image, $user_dob, $user_password);
+    loginUser($user_email, $user_password);
 
-    $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
-
-    $user_role = 'User';
-    $stmt = mysqli_prepare($connection, "INSERT INTO
-      users(user_firstname, user_lastname, username, user_email, user_phonenumber, user_dob, user_image, user_password, user_role) VALUES(?,?,?,?,?,?,?,?,?)");
-    mysqli_stmt_bind_param($stmt, "ssssissss", $user_firstname, $user_lastname, $username, $user_email, $user_phonenumber, $user_image, $user_dob, $user_password, $user_role);
-    mysqli_stmt_execute($stmt);
-
-    if (!$stmt) {
-      die(mysqli_error($connection));
-    }
-
-    header("Location: ./index.php");
   }
 ?>
 

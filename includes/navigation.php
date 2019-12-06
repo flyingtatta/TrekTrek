@@ -3,34 +3,7 @@
     $user_email    = $_POST['user_email'];
     $user_password = $_POST['user_password'];
 
-    $query = "SELECT * FROM users WHERE user_email = '{$user_email}'";
-    $login_user = mysqli_query($connection, $query);
-
-    while($row = mysqli_fetch_assoc($login_user)){
-      $db_user_firstname   = $row['user_firstname'];
-      $db_user_lastname    = $row['user_lastname'];
-      $db_username         = $row['username'];
-      $db_user_email       = $row['user_email'];
-      $db_user_phonenumber = $row['user_phonenumber'];
-      $db_user_image       = $row['user_image'];
-      $db_user_dob         = $row['user_dob'];
-      $db_user_password    = $row['user_password'];
-      $db_user_role        = $row['user_role'];
-
-    if (password_verify($user_password, $db_user_password)) {
-      $_SESSION['user_firstname']   = $db_user_firstname;
-      $_SESSION['user_lastname']    = $db_user_lastname;
-      $_SESSION['username']         = $db_username;
-      $_SESSION['user_email']       = $db_user_email;
-      $_SESSION['user_phonenumber'] = $db_user_phonenumber;
-      $_SESSION['user_image']       = $db_user_image;
-      $_SESSION['user_dob']         = $db_user_dob;
-      $_SESSION['user_password']    = $db_user_password;
-      $_SESSION['user_role']        = $db_user_role;
-
-      header("Location: ./index.php");
-    }
-  }
+    loginUser($user_email, $user_password);
 }
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
