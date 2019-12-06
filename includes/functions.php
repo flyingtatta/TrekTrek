@@ -18,6 +18,13 @@
     return false;
   }
 
+  function confirmQuery($query){
+    global $connection;
+    if (!$query) {
+      die('Query Failed: ' . mysqli_error($connection));
+    }
+  }
+
   function emailExists($user_email){
     global $connection;
 
