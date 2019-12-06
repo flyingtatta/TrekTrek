@@ -16,7 +16,7 @@
     $user_dob         = mysqli_real_escape_string($connection, $_POST['user_dob']);
     $user_password    = mysqli_real_escape_string($connection, $_POST['user_password']);
 
-    move_uploaded_file($tmp_user_image, "/TrekTrek/images/$user_image");
+    move_uploaded_file($tmp_user_image, "images/$user_image");
 
     $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
 
