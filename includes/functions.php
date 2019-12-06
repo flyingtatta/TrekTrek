@@ -38,7 +38,7 @@
     $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
 
     $user_role = 'User';
-    $stmt = mysqli_prepare($connection, "INSERT INTO users(user_firstname, user_lastname, username, user_email, user_phonenumber, user_dob, user_image, user_password, user_role) VALUES(?,?,?,?,?,?,?,?,?)");
+    $stmt = mysqli_prepare($connection, "INSERT INTO users(user_firstname, user_lastname, username, user_email, user_phonenumber, user_image, user_dob, user_password, user_role) VALUES(?,?,?,?,?,?,?,?,?)");
     mysqli_stmt_bind_param($stmt, "ssssissss", $user_firstname, $user_lastname, $username, $user_email, $user_phonenumber, $user_image, $user_dob, $user_password, $user_role);
     mysqli_stmt_execute($stmt);
 
