@@ -28,6 +28,8 @@
       $_SESSION['user_dob']         = $db_user_dob;
       $_SESSION['user_password']    = $db_user_password;
       $_SESSION['user_role']        = $db_user_role;
+
+      header("Location: ./index.php");
     }
   }
 ?>
@@ -46,7 +48,7 @@
 
       <?php if (!isset($_SESSION['username'])): ?>
         <li class="nav-item">
-          <a class="nav-link">Register</a>
+          <a class="nav-link" href="register.php">Register</a>
         </li>
       <?php endif; ?>
 
@@ -60,7 +62,7 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
-      </li> 
+      </li>
     </ul>
 
     <?php if (!isset($_SESSION['user_email'])): ?>
