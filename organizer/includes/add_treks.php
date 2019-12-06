@@ -20,6 +20,7 @@
       'trek_about' => '',
       'trek_location' => '',
       'trek_duration' => '',
+      'trek_altitude' => '',
       'trek_price' => ''
     ];
 
@@ -38,7 +39,7 @@
       $error['trek_about'] = 'Cannot be empty';
     }
     if (strlen($_POST['trek_about']) < 100) {
-      $error['trek_about'] = 'Atleast 20 words describing the place';
+      $error['trek_about'] = 'Atleast 30-35 words describing the place';
     }
 
     if (empty($_POST['trek_location'])) {
@@ -49,9 +50,14 @@
       $error['trek_duration'] = 'Trek duration cannot be empty';
     }
 
+    if ($_POST['trek_altitude'] < 0) {
+      $error['trek_altitude'] = 'Altitude cannot be in minus';
+    }
+
     if (empty($_POST['trek_price'])) {
       $error['trek_price'] = 'Trek Price cannot be empty';
     }
+
     if ($_POST['trek_price'] < 0) {
       $error['trek_price'] = 'Enter a valid price';
     }
@@ -80,6 +86,13 @@
         <label for="">Trek Name(Place name):</label>
         <input type="text" name="trek_name" class="form-control"
         value="<?php if(isset($_POST['submit'])){ echo $_POST['trek_name']; } ?>">
+        <p class="text-danger">
+          <?php
+          if (isset($error['trek_name'])) {
+            echo $error['trek_name'];
+          }
+          ?>
+        </p>
       </div>
     </div>
 
@@ -88,21 +101,40 @@
         <label for="">Trek departue:</label>
         <input type="date" name="trek_departure" class="form-control"
         value="<?php if(isset($_POST['submit'])){ echo $_POST['trek_departure']; } ?>">
+        <p class="text-danger">
+          <?php
+          if (isset($error['trek_departure'])) {
+            echo $error['trek_departure'];
+          }
+          ?>
+        </p>
       </div>
 
       <div class="col-12 col-sm-6 form-group">
         <label for="">Trek arrival:</label>
         <input type="date" name="trek_arrival" class="form-control"
         value="<?php if(isset($_POST['submit'])){ echo $_POST['trek_arrival']; } ?>">
+        <p class="text-danger">
+          <?php
+          if (isset($error['trek_arrival'])) {
+            echo $error['trek_arrival'];
+          }
+          ?>
+        </p>
       </div>
     </div>
 
     <div class="row">
       <div class="col-12 col-sm-12 form-group">
         <label for="">About the Trek:</label>
-        <textarea name="trek_about" class="form-control" rows="6" cols="25">
-          <?php if(isset($_POST['submit'])){ echo $_POST['trek_about']; } ?>
-        </textarea>
+        <textarea name="trek_about" class="form-control" rows="6" cols="25"><?php if(isset($_POST['submit'])){ echo $_POST['trek_about']; } ?></textarea>
+        <p class="text-danger">
+          <?php
+          if (isset($error['trek_about'])) {
+            echo $error['trek_about'];
+          }
+          ?>
+        </p>
       </div>
     </div>
 
@@ -111,6 +143,13 @@
         <label for="">Trek Location:</label>
         <input type="text" name="trek_location" class="form-control"
         value="<?php if(isset($_POST['submit'])){ echo $_POST['trek_location']; } ?>">
+        <p class="text-danger">
+          <?php
+          if (isset($error['trek_location'])) {
+            echo $error['trek_location'];
+          }
+          ?>
+        </p>
       </div>
     </div>
 
@@ -118,9 +157,6 @@
       <div class="col-12 col-sm-6 form-group">
         <label for="">No. of Days:</label>
         <select class="form-control" name="trek_duration">
-          <?php if (isset($_POST['submit'])) { ?>
-            <option value="<?php echo $_POST['trek_duration']; ?>"><?php echo $_POST['trek_duration']; ?> day<?php if ($i>=2){echo "s";} ?></option>
-          <?php } ?>
           <?php for ($i=1; $i <= 7; $i++) { ?>
             <option value="<?php echo $i; ?>"><?php echo $i; ?> day<?php if ($i>=2){echo "s";} ?></option>
           <?php } ?>
@@ -147,9 +183,16 @@
       </div>
 
       <div class="col-12 col-sm-6 form-group">
-        <label for="">Altitude:</label>
+        <label for="">Altitude (in Ft):</label>
         <input type="number" name="trek_altitude" class="form-control"
         value="<?php if(isset($_POST['submit'])){ echo $_POST['trek_altitude']; } ?>">
+        <p class="text-danger">
+          <?php
+          if (isset($error['trek_altitude'])) {
+            echo $error['trek_altitude'];
+          }
+          ?>
+        </p>
       </div>
     </div>
 
@@ -158,6 +201,13 @@
         <label for="">Trek Price:</label>
         <input type="number" name="trek_price" class="form-control"
         value="<?php if(isset($_POST['submit'])){ echo $_POST['trek_price']; } ?>">
+        <p class="text-danger">
+          <?php
+          if (isset($error['trek_price'])) {
+            echo $error['trek_price'];
+          }
+          ?>
+        </p>
       </div>
     </div>
 
