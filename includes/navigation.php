@@ -40,7 +40,7 @@
 
         <?php if (isset($_SESSION['user_role'])): ?>
           <li class="nav-item">
-            <a class="nav-link" href="organizer">Add Treks</a>
+            <a class="nav-link" href="organizer">Organizer</a>
           </li>
         <?php endif; ?>
 
