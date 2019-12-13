@@ -12,19 +12,19 @@
 
 <table class="table table-bordered">
   <thead>
-    <th>Id</th>
-    <th>Name</th>
-    <th>Departure</th>
-    <th>Arrival</th>
-    <th>About</th>
-    <th>Location</th>
-    <th>Duration</th>
-    <th>Image</th>
-    <th>Type</th>
-    <th>Altitude</th>
-    <th>Price</th>
-    <th>Status</th>
-    <th>Views</th>
+    <th class="text-center">Id</th>
+    <th class="text-center">Name</th>
+    <th class="text-center px-3">Departure</th>
+    <th class="text-center px-5">Arrival</th>
+    <th class="text-center">About</th>
+    <th class="text-center">Location</th>
+    <th class="text-center">Duration</th>
+    <th class="text-center">Image</th>
+    <th class="text-center">Type</th>
+    <th class="text-center">Altitude</th>
+    <th class="text-center">Price</th>
+    <th class="text-center">Status</th>
+    <th class="text-center">Views</th>
   </thead>
   <tbody>
     <?php
@@ -44,19 +44,22 @@
       $trek_views     = $row['trek_views']; ?>
 
       <tr>
-        <td><?php echo $trek_id; ?></td>
-        <td><?php echo $trek_name; ?></td>
-        <td><?php echo $trek_departure; ?></td>
-        <td><?php echo $trek_arrival; ?></td>
-        <td><?php echo $trek_about; ?></td>
-        <td><?php echo $trek_location; ?></td>
-        <td><?php echo $trek_duration; ?></td>
-        <td><img src="trek-images/<?php echo $trek_image; ?>" width="200" height="100"></td>
-        <td><?php echo $trek_type; ?></td>
-        <td><?php echo $trek_altitude; ?>ft</td>
-        <td>&#8377;<?php echo $trek_price; ?></td>
-        <td><?php echo $trek_status; ?></td>
-        <td><?php echo $trek_views; ?></td>
+        <td class="text-center"><?php echo $trek_id; ?></td>
+        <td class="text-center"><?php echo $trek_name; ?></td>
+        <td class="text-center"><?php echo $trek_departure; ?></td>
+        <td class="text-center"><?php echo $trek_arrival; ?></td>
+        <td class="text-justify"><?php echo $trek_about; ?></td>
+        <td class="text-center" ><?php echo $trek_location; ?></td>
+        <td class="text-center" ><?php echo $trek_duration; ?></td>
+        <td class="text-center" ><img src="trek-images/<?php echo $trek_image; ?>" width="200" height="100"></td>
+        <td class="text-center" ><?php echo $trek_type; ?></td>
+        <td class="text-center" ><?php echo $trek_altitude; ?>ft</td>
+        <td class="text-center" >&#8377;<?php echo $trek_price; ?></td>
+        <td class="text-center"><?php echo $trek_status; ?></td>
+        <td class="text-center" ><?php echo $trek_views; ?></td>
+        <td class="text-center">
+          <a href="treks.php?delete=<?php echo $trek_id; ?>">Delete</a>
+        </td>
       </tr>
 
     <?php
@@ -67,3 +70,15 @@
   </tbody>
 </table>
 </div>
+
+<?php
+  if (isset($_GET['delete'])) {
+    $trek_id = $_GET['delete'];
+
+    $stmt = mysqli_prepare($connection, "DELETE FROM treks WHERE trek_id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $trek_id);
+    mysqli_stmt_execute($stmt);
+    confirmQuery($stmt);
+    header("Location: treks.php");
+  }
+?>
