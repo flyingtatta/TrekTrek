@@ -60,8 +60,8 @@
 
 
           <!-- Modal -->
-          <div class="modal fade" id="<?php echo $trek_name.$trek_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal fade" id="<?php echo $trek_name.$trek_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalCenterTitle"><?php echo $trek_name; ?></h5>
@@ -88,11 +88,11 @@
                     <?php echo $trek_about; ?>
                   </p>
 
-                  <p id="about" class="text-justify">
+                  <p class="text-justify"  id="highlights">
                     <span class="lead text-primary">Highlights</span>
                   </p>
 
-                  <ul class="list-group" id="highlights">
+                  <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       <span class="badge badge-primary badge-pill"><?php echo $trek_departure; ?></span>
                       <span class="badge badge-primary badge-pill"><i class="fa fa-arrow-circle-right"></i></span>
