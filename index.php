@@ -11,7 +11,7 @@ confirmQuery($select_all_treks);
 ?>
 
 
-<?php includes 'includes/main.php'; ?>
+<?php include 'includes/main.php'; ?>
 
 
 </div>
