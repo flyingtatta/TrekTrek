@@ -4,4 +4,8 @@
 <?php include 'includes/navigation.php'; ?>
 
 
+<div class="container">
+  
+</div>
+
 <?php include 'includes/footer.php'; ?>
