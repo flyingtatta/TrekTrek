@@ -15,19 +15,19 @@ confirmQuery($select_all_treks);
   <div class="row">
     <?php
     while ($row = mysqli_fetch_assoc($select_all_treks)) {
-      $trek_id = $row['trek_id'];
-      $trek_name = $row['trek_name'];
-      $trek_departure = $row['trek_departure'];
-      $trek_arrival = $row['trek_arrival'];
-      $trek_about = $row['trek_about'];
-      $trek_location = $row['trek_location'];
-      $trek_duration = $row['trek_duration'];
-      $trek_image = $row['trek_image'];
-      $trek_type = $row['trek_type'];
-      $trek_views = $row['trek_views'];
-      $trek_altitude = $row['trek_altitude'];
-      $trek_price = $row['trek_price'];
-      $trek_status = $row['trek_status'];
+      $trek_id        = $row['trek_id'];
+      $trek_name      = $row['trek_name'];
+      $trek_departure = date("d-m-Y", strtotime($row['trek_departure']));
+      $trek_arrival   = date("d-m-Y", strtotime($row['trek_arrival']));
+      $trek_about     = $row['trek_about'];
+      $trek_location  = $row['trek_location'];
+      $trek_duration  = $row['trek_duration'];
+      $trek_image     = $row['trek_image'];
+      $trek_type      = $row['trek_type'];
+      $trek_views     = $row['trek_views'];
+      $trek_altitude  = $row['trek_altitude'];
+      $trek_price     = $row['trek_price'];
+      $trek_status    = $row['trek_status'];
       ?>
       <div class="col-12 col-md-4">
         <div class="card" style="width: auto;">
