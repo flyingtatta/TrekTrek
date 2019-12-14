@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
       <?php else: ?>
         <ul class="nav nav-pills mr-2">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">
+            <a class="text-light nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">
               <img src="./images/<?php echo $_SESSION['user_image']; ?>" width="35" height="35" style="border-radius:50%;">
               <?php echo $_SESSION['user_firstname'] . ". " . $_SESSION['user_lastname']; ?>
             </a>
