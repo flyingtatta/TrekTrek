@@ -37,7 +37,7 @@
                 }
                 ?>
               </li>
-              <li class="list-group-item">Altitude : <?php echo $trek_altitude; ?>ft</li>
+              <li class="list-group-item">Altitude : <?php echo $trek_altitude; ?></li>
             </ul>
             <br>
             <a data-toggle="modal" class="btn btn-primary" href="<?php echo "#".$trek_name.$trek_id; ?>">
