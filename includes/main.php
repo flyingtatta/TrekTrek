@@ -1,16 +1,3 @@
-<?php include 'includes/header.php'; ?>
-<?php session_start(); ?>
-<?php include 'includes/functions.php'; ?>
-<?php include 'includes/navigation.php'; ?>
-
-<?php
-$query = "SELECT * FROM treks WHERE trek_status = 'On'";
-$select_all_treks = mysqli_query($connection, $query);
-
-confirmQuery($select_all_treks);
-?>
-
-<<<<<<< HEAD
 
 <main class="container">
   <div class="row">
@@ -20,7 +7,6 @@ confirmQuery($select_all_treks);
       $trek_name      = $row['trek_name'];
       $trek_departure = date("d-m-Y", strtotime($row['trek_departure']));
       $trek_arrival   = date("d-m-Y", strtotime($row['trek_arrival']));
-      $trek_duration  = $row['trek_duration'];
       $trek_about     = $row['trek_about'];
       $trek_location  = $row['trek_location'];
       $trek_duration  = $row['trek_duration'];
@@ -51,7 +37,7 @@ confirmQuery($select_all_treks);
                 }
                 ?>
               </li>
-              <li class="list-group-item">Altitude : <?php echo $trek_altitude; ?></li>
+              <li class="list-group-item">Altitude : <?php echo $trek_altitude; ?>ft</li>
             </ul>
             <br>
             <a data-toggle="modal" class="btn btn-primary" href="<?php echo "#".$trek_name.$trek_id; ?>">
@@ -116,7 +102,7 @@ confirmQuery($select_all_treks);
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Altitude
-                      <span class="badge badge-primary badge-pill"><?php echo $trek_altitude; ?></span>
+                      <span class="badge badge-primary badge-pill"><?php echo $trek_altitude; ?>ft</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Type
@@ -142,10 +128,3 @@ confirmQuery($select_all_treks);
     <?php } ?>
   </div>
 </main>
-=======
-<?php include 'includes/main.php' ?>
->>>>>>> 96efd7d66c79f894143e3075f33bfb6e230e83be
-
-
-</div>
-<?php include 'includes/footer.php'; ?>
