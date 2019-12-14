@@ -19,6 +19,7 @@ confirmQuery($select_all_treks);
       $trek_name      = $row['trek_name'];
       $trek_departure = date("d-m-Y", strtotime($row['trek_departure']));
       $trek_arrival   = date("d-m-Y", strtotime($row['trek_arrival']));
+      $trek_duration  = $row['trek_duration'];
       $trek_about     = $row['trek_about'];
       $trek_location  = $row['trek_location'];
       $trek_duration  = $row['trek_duration'];
@@ -49,7 +50,7 @@ confirmQuery($select_all_treks);
                 }
                 ?>
               </li>
-              <li class="list-group-item">Altitude : <?php echo $trek_altitude; ?>ft</li>
+              <li class="list-group-item">Altitude : <?php echo $trek_altitude; ?></li>
             </ul>
             <br>
             <a data-toggle="modal" class="btn btn-primary" href="<?php echo "#".$trek_name.$trek_id; ?>">
@@ -114,7 +115,7 @@ confirmQuery($select_all_treks);
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Altitude
-                      <span class="badge badge-primary badge-pill"><?php echo $trek_altitude; ?>ft</span>
+                      <span class="badge badge-primary badge-pill"><?php echo $trek_altitude; ?></span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Type
