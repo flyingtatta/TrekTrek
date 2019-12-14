@@ -66,7 +66,7 @@
         <td class="text-center" ><?php echo $trek_duration; ?></td>
         <td class="text-center" ><img src="trek-images/<?php echo $trek_image; ?>" width="200" height="100"></td>
         <td class="text-center" ><?php echo $trek_type; ?></td>
-        <td class="text-center" ><?php echo $trek_altitude; ?>ft</td>
+        <td class="text-center" ><?php echo $trek_altitude; ?></td>
         <td class="text-center" >&#8377;<?php echo $trek_price; ?></td>
         <td class="text-center"><?php echo $trek_status; ?></td>
         <td class="text-center" >
