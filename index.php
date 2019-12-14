@@ -4,30 +4,32 @@
 <?php include 'includes/navigation.php'; ?>
 
 <?php
-  $query = "SELECT * FROM treks WHERE trek_status = 'On'";
-  $select_all_treks = mysqli_query($connection, $query);
+$query = "SELECT * FROM treks WHERE trek_status = 'On'";
+$select_all_treks = mysqli_query($connection, $query);
 
-  confirmQuery($select_all_treks);
+confirmQuery($select_all_treks);
+?>
 
-  while ($row = mysqli_fetch_assoc($select_all_treks)) {
-    $trek_id = $row['trek_id'];
-    $trek_name = $row['trek_name'];
-    $trek_departure = $row['trek_departure'];
-    $trek_arrival = $row['trek_arrival'];
-    $trek_about = $row['trek_about'];
-    $trek_location = $row['trek_location'];
-    $trek_duration = $row['trek_duration'];
-    $trek_image = $row['trek_image'];
-    $trek_type = $row['trek_type'];
-    $trek_views = $row['trek_views'];
-    $trek_altitude = $row['trek_altitude'];
-    $trek_price = $row['trek_price'];
-    $trek_status = $row['trek_status'];
-    ?>
 
 <main class="container">
-    <div class="row">
-      <div class="col-12">
+  <div class="row">
+    <?php
+    while ($row = mysqli_fetch_assoc($select_all_treks)) {
+      $trek_id = $row['trek_id'];
+      $trek_name = $row['trek_name'];
+      $trek_departure = $row['trek_departure'];
+      $trek_arrival = $row['trek_arrival'];
+      $trek_about = $row['trek_about'];
+      $trek_location = $row['trek_location'];
+      $trek_duration = $row['trek_duration'];
+      $trek_image = $row['trek_image'];
+      $trek_type = $row['trek_type'];
+      $trek_views = $row['trek_views'];
+      $trek_altitude = $row['trek_altitude'];
+      $trek_price = $row['trek_price'];
+      $trek_status = $row['trek_status'];
+      ?>
+      <div class="col-12 col-md-4">
         <div class="card" style="width: auto;">
           <img src="organizer/trek-images/<?php echo $trek_image; ?>" class="card-img-top" alt="...">
           <div class="card-body">
@@ -133,12 +135,12 @@
             </div>
           </div>
         </div>
+        <br>
       </div>
-    </div>
+    <?php } ?>
+  </div>
+</main>
 
-    <br>
-  </main>
-<?php } ?>
 
 </div>
 <?php include 'includes/footer.php'; ?>
