@@ -53,7 +53,7 @@
           </a>
         </td>
         <td class="text-center">
-          <a href="">
+          <a href="./treks.php?source=edit_treks&trek_id=<?php echo $trek_id; ?>">
             <i class="fa fa-edit text-primary fa-lg"></i>
           </a>
         </td>
@@ -68,7 +68,17 @@
         <td class="text-center" ><?php echo $trek_type; ?></td>
         <td class="text-center" ><?php echo $trek_altitude; ?></td>
         <td class="text-center" >&#8377;<?php echo $trek_price; ?></td>
-        <td class="text-center"><?php echo $trek_status; ?></td>
+        <td class="text-center">
+          <span class="badge badge-primary badge-pill" style="background-color:
+          <?php if ($trek_status == 'On'): ?>
+          <?php echo "#28a745";?>
+          <?php else: ?>
+          <?php echo "#dc3545";?>
+          <?php endif; ?>">
+          <?php echo $trek_status; ?>
+          </span>
+        </td>
+
         <td class="text-center" >
           <span class="badge badge-primary badge-pill" style="background-color:
           <?php if ($trek_views >= 0 && $trek_views < 25): ?>
