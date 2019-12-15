@@ -16,6 +16,10 @@ if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Organizer'){
       include 'includes/add_treks.php';
       break;
 
+    case 'edit_treks':
+      include 'includes/edit_trek.php';
+      break;
+
     default:
       include 'includes/view_treks.php';
       break;
