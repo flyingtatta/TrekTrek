@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
           </div>
         </li>
 
-        <?php if (isset($_SESSION['user_role'])): ?>
+        <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] != 'User'): ?>
           <li class="nav-item">
             <a class="nav-link" href="organizer">Organizer</a>
           </li>
