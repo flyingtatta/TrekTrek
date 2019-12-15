@@ -32,4 +32,21 @@ function updateTrek($trek_id,$trek_name,$trek_departure,$trek_arrival,$trek_abou
   confirmQuery($stmt);
   header("Location: treks.php");
 }
+
+function reverseStatus($trek_id, $trek_status){
+  global $connection;
+  if ($trek_status == 'On') {
+    $trek_status = 'Off';
+    $stmt = mysqli_prepare($connection, "UPDATE treks SET trek_status = ? WHERE trek_id = ?");
+    mysqli_stmt_bind_param($stmt, "si", $trek_status, $trek_id);
+    mysqli_stmt_execute($stmt);
+    confirmQuery($stmt);
+  }else if ($trek_status == 'Off') {
+    $trek_status = 'On';
+    $stmt = mysqli_prepare($connection, "UPDATE treks SET trek_status = ? WHERE trek_id = ?");
+    mysqli_stmt_bind_param($stmt, "si", $trek_status, $trek_id);
+    mysqli_stmt_execute($stmt);
+    confirmQuery($stmt);
+  }
+}
 ?>
