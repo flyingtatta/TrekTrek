@@ -13,4 +13,5 @@ confirmQuery($select_all_treks);
 
 <?php include 'includes/main.php'; ?>
 
+
 <?php include 'includes/footer.php'; ?>
