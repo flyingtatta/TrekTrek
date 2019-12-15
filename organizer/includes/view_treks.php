@@ -14,13 +14,14 @@
   <thead>
     <td>Delete</th>
     <td>Edit</th>
+    <td>View</th>
     <th class="text-center">Id</th>
     <th class="text-center">Name</th>
     <th class="text-center px-3">Departure</th>
     <th class="text-center px-5">Arrival</th>
     <th class="text-center">About</th>
     <th class="text-center">Location</th>
-    <th class="text-center">Duration</th>
+    <th class="text-center">Days</th>
     <th class="text-center">Image</th>
     <th class="text-center">Type</th>
     <th class="text-center">Altitude</th>
@@ -57,6 +58,11 @@
             <i class="fa fa-edit text-primary fa-lg"></i>
           </a>
         </td>
+        <td class="text-center">
+          <a href="../trek.php?trek_id=<?php echo $trek_id; ?>">
+            <i class="fa fa-eye text-dark fa-sm"></i>
+          </a>
+        </td>
         <td class="text-center"><?php echo $trek_id; ?></td>
         <td class="text-center"><?php echo $trek_name; ?></td>
         <td class="text-center"><?php echo $trek_departure; ?></td>
@@ -69,14 +75,16 @@
         <td class="text-center" ><?php echo $trek_altitude; ?></td>
         <td class="text-center" >&#8377;<?php echo $trek_price; ?></td>
         <td class="text-center">
-          <span class="badge badge-primary badge-pill" style="background-color:
-          <?php if ($trek_status == 'On'): ?>
-          <?php echo "#28a745";?>
-          <?php else: ?>
-          <?php echo "#dc3545";?>
-          <?php endif; ?>">
-          <?php echo $trek_status; ?>
-          </span>
+          <a href="treks.php?status=<?php echo $trek_status; ?>&trek_id=<?php echo $trek_id; ?>">
+            <span class="badge badge-primary badge-pill" style="background-color:
+            <?php if ($trek_status == 'On'): ?>
+            <?php echo "#28a745";?>
+            <?php else: ?>
+              <?php echo "#dc3545";?>
+            <?php endif; ?>">
+            <?php echo $trek_status; ?>
+            </span>
+          </a>
         </td>
 
         <td class="text-center" >
@@ -115,6 +123,13 @@
     mysqli_stmt_bind_param($stmt, "i", $trek_id);
     mysqli_stmt_execute($stmt);
     confirmQuery($stmt);
+    header("Location: treks.php");
+  }
+
+  if (isset($_GET['status'])) {
+    $trek_id = $_GET['trek_id'];
+    $trek_status = $_GET['status'];
+    reverseStatus($trek_id, $trek_status);
     header("Location: treks.php");
   }
 ?>
