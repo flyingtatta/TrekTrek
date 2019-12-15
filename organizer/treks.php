@@ -18,7 +18,7 @@ if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Organizer'){
 
     case 'edit_treks':
       include 'includes/edit_trek.php';
-      break;
+      break;    
 
     default:
       include 'includes/view_treks.php';
