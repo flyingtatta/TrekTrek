@@ -1,5 +1,5 @@
 
-<main class="container">
+<main class="mx-3">
   <div class="row">
     <?php
     while ($row = mysqli_fetch_assoc($select_all_treks)) {
@@ -19,7 +19,7 @@
       ?>
       <div class="col-12 col-md-4">
         <div class="card" style="width: auto;">
-          <img src="organizer/trek-images/<?php echo $trek_image; ?>" class="card-img-top" alt="...">
+          <img src="organizer/trek-images/<?php echo $trek_image; ?>" class="card-img-top" style="height: 290px;">
           <div class="card-body">
             <h5 class="card-title">
               <?php echo $trek_name; ?>
@@ -40,17 +40,36 @@
               <li class="list-group-item">Altitude : <?php echo $trek_altitude; ?></li>
             </ul>
             <br>
-            <a data-toggle="modal" class="btn btn-primary" href="<?php echo "#".$trek_name.$trek_id; ?>">
+
+            <!-- <a data-toggle="modal" href="<?php echo "#".$trek_name.$trek_id; ?>" class="btn btn-primary">
               Know More!
-            </a>
+            </a> -->
+
+            <div class="d-flex justify-content-between">
+              <a href="<?php echo "#".$trek_name.$trek_id; ?>" data-toggle="modal" class="btn btn-primary">
+                Quick Details!
+              </a>
+
+              <a href="./trek.php?trek_id=<?php echo $trek_id; ?>" class="btn btn-primary">
+                Full Details
+              </a>
+            </div>
+
           </div>
 
 
           <!-- Button trigger modal -->
-
+          <!-- <?php
+          // if (isset($_POST['knowmore'])) {
+          //   $query = "UPDATE treks SET trek_views = trek_views+1 WHERE trek_id = $trek_id";
+          //   $views_query = mysqli_query($connection, $query);
+          //   confirmQuery($views_query);
+          // }
+          ?> -->
 
           <!-- Modal -->
           <div class="modal fade" id="<?php echo $trek_name.$trek_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+
             <div class="modal-dialog modal-dialog-scrollable" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -63,22 +82,22 @@
 
                   <ul class="nav nav-tabs">
                     <li class="nav-item">
-                      <a class="nav-link active" href="#about">About</a>
+                      <a class="nav-link active" href="<?php echo "#".$trek_name.$trek_id.'about'; ?>">About</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#highlights">Highlights</a>
+                      <a class="nav-link" href="<?php echo "#".$trek_name.$trek_id.'highlights'; ?>">Highlights</a>
                     </li>
                   </ul>
 
                   <br>
 
-                  <p id="about" class="text-justify">
+                  <p id="<?php echo $trek_name.$trek_id.'about'; ?>" class="text-justify">
                     <span class="lead text-primary">About</span>
                     <br>
                     <?php echo $trek_about; ?>
                   </p>
 
-                  <p class="text-justify"  id="highlights">
+                  <p class="text-justify"  id="<?php echo $trek_name.$trek_id.'highlights'; ?>">
                     <span class="lead text-primary">Highlights</span>
                   </p>
 
@@ -102,7 +121,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Altitude
-                      <span class="badge badge-primary badge-pill"><?php echo $trek_altitude; ?>ft</span>
+                      <span class="badge badge-primary badge-pill"><?php echo $trek_altitude; ?></span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Type
