@@ -9,7 +9,10 @@
       <div class="col-12 col-sm-6 col-md-6 text-center align-self-center">
         <div class="d-block d-sm-none">
             <img src="./images/<?php echo $_SESSION['user_image']; ?>" width="150" height="150" style="border-radius:50%;">
+            <p></p>
         </div>
+
+        <a href="./edit_user.php?user_id=<?php echo $_SESSION['user_id']; ?>"><i class="fa fa-edit fa-2x"></i></a>
         <h5 class="display-4"><?php echo $_SESSION['user_firstname'] . ". " . $_SESSION['user_lastname']; ?></h5>
       </div>
       <div class="col-6 d-none d-sm-block">

@@ -56,6 +56,39 @@
     header("Location: ./index.php");
   }
 
+  function updateUser($user_id, $user_firstname, $user_lastname, $username, $user_email, $user_phonenumber, $user_image, $tmp_user_image, $user_dob, $user_password){
+    global $connection;
+
+    if (empty($user_image)) {
+      $query = mysqli_query($connection, "SELECT user_image FROM users WHERE user_id = $user_id");
+      confirmQuery($query);
+      while($row = mysqli_fetch_assoc($query)){
+        $user_image = $row['user_image'];
+      }
+    }
+
+    if (empty($user_password)) {
+      $query = mysqli_query($connection, "SELECT user_password FROM users WHERE user_id = $user_id");
+      confirmQuery($query);
+      while($row = mysqli_fetch_assoc($query)){
+        $user_password = $row['user_password'];
+      }
+    }else{
+      $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
+    }
+
+    move_uploaded_file($tmp_user_image, "images/$user_image");
+
+
+    $stmt = mysqli_prepare($connection, "UPDATE users SET user_firstname = ?, user_lastname = ?, username = ?, user_email = ?, user_phonenumber = ?, user_image = ?, user_dob = ?, user_password = ? WHERE user_id = ?;");
+    mysqli_stmt_bind_param($stmt, "ssssssssi", $user_firstname, $user_lastname, $username, $user_email, $user_phonenumber, $user_image, $user_dob, $user_password, $user_id);
+    mysqli_stmt_execute($stmt);
+    confirmQuery($stmt);
+
+    header("Location: ./profile.php");
+  }
+
+
   function loginUser($user_email, $user_password){
     global $connection;
 
@@ -63,6 +96,7 @@
     $login_user = mysqli_query($connection, $query);
 
     while($row = mysqli_fetch_assoc($login_user)){
+      $db_user_id          = $row['user_id'];
       $db_user_firstname   = $row['user_firstname'];
       $db_user_lastname    = $row['user_lastname'];
       $db_username         = $row['username'];
@@ -74,6 +108,7 @@
       $db_user_role        = $row['user_role'];
 
     if (password_verify($user_password, $db_user_password)) {
+      $_SESSION['user_id']          = $db_user_id;
       $_SESSION['user_firstname']   = $db_user_firstname;
       $_SESSION['user_lastname']    = $db_user_lastname;
       $_SESSION['username']         = $db_username;
@@ -87,6 +122,7 @@
       header("Location: ./index.php");
     }
   }
+
   }
 
 ?>
