@@ -161,9 +161,9 @@ if (isset($_POST['submit'])) {
           <?php if (isset($_POST['submit'])) { ?>
             <option value="<?php echo $_POST['trek_type']; ?>"><?php echo $_POST['trek_type']; ?></option>
           <?php } ?>
-          <option value="longDay">Long Day Trek</option>
-          <option value="shortDay">Short Day Trek</option>
-          <option value="camping">Camping Trek</option>
+          <option value="Long Day">Long Day Trek</option>
+          <option value="Short Day">Short Day Trek</option>
+          <option value="Camping">Camping Trek</option>
         </select>
       </div>
 
