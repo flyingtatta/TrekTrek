@@ -64,7 +64,10 @@
       confirmQuery($query);
       while($row = mysqli_fetch_assoc($query)){
         $user_image = $row['user_image'];
+        $_SESSION['user_image'] = $user_image;
       }
+    }else{
+      $_SESSION['user_image'] = $user_image;
     }
 
     if (empty($user_password)) {
@@ -84,6 +87,16 @@
     mysqli_stmt_bind_param($stmt, "ssssssssi", $user_firstname, $user_lastname, $username, $user_email, $user_phonenumber, $user_image, $user_dob, $user_password, $user_id);
     mysqli_stmt_execute($stmt);
     confirmQuery($stmt);
+
+    $_SESSION['user_id']          = $user_id;
+    $_SESSION['user_firstname']   = $user_firstname;
+    $_SESSION['user_lastname']    = $user_lastname;
+    $_SESSION['username']         = $username;
+    $_SESSION['user_email']       = $user_email;
+    $_SESSION['user_phonenumber'] = $user_phonenumber;
+    $_SESSION['user_dob']         = $user_dob;
+    $_SESSION['user_password']    = $user_password;
+    $_SESSION['user_role']        = $user_role;
 
     header("Location: ./profile.php");
   }
