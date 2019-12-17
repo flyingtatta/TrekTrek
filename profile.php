@@ -25,10 +25,10 @@
     <div class="row">
       <div class="col-12 col-sm-12 col-md-6 text-center">
         <p style="font-size: 1.5rem;">
-          <span class="badge badge-primary badge-pill">
+          <span class="badge badge-warning badge-pill">
             <i class="fa fa-user"></i>
           </span>
-          <span class="badge badge-pill badge-warning">
+          <span class="badge badge-pill badge-primary">
             <?php echo $_SESSION['username']; ?>
           </span>
         </p>
@@ -38,10 +38,10 @@
     <div class="row">
       <div class="col-12 col-sm-12 col-md-6 text-center">
         <p style="font-size: 1.5rem;">
-          <span class="badge badge-primary badge-pill">
+          <span class="badge badge-warning badge-pill">
             <i class="fa fa-envelope"></i>
           </span>
-          <span class="badge badge-pill badge-warning">
+          <span class="badge badge-pill badge-primary">
             <?php echo $_SESSION['user_email']; ?>
           </span>
         </p>
@@ -51,10 +51,10 @@
     <div class="row">
       <div class="col-12 col-sm-12 col-md-6 text-center">
         <p style="font-size: 1.5rem;">
-          <span class="badge badge-primary badge-pill">
+          <span class="badge badge-warning badge-pill">
             <i class="fa fa-phone"></i>
           </span>
-          <span class="badge badge-pill badge-warning">
+          <span class="badge badge-pill badge-primary">
             <?php echo $_SESSION['user_phonenumber']; ?>
           </span>
         </p>
@@ -64,10 +64,10 @@
     <div class="row">
       <div class="col-12 col-sm-12 col-md-6 text-center">
         <p style="font-size: 1.5rem;" data-toggle="tooltip" data-placement="top" title="dd-mm-yyyy">
-          <span class="badge badge-primary badge-pill">
+          <span class="badge badge-warning badge-pill">
             <i class="fa fa-calendar"></i>
           </span>
-          <span class="badge badge-pill badge-warning">
+          <span class="badge badge-pill badge-primary">
             <?php echo date("d-m-Y", strtotime($_SESSION['user_dob'])); ?>
           </span>
         </p>
