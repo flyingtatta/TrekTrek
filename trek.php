@@ -42,7 +42,7 @@ if (isset($_GET['trek_id'])) {
   <div class="mx-3">
     <div class="row">
       <div class="col-6 d-none d-sm-block">
-        <img src="organizer/trek-images/<?php echo $trek_image; ?>" class="img-fluid">
+        <img src="organizer/trek-images/<?php echo $trek_image; ?>" class="img-fluid rounded rounded-lg">
       </div>
       <div class="col-12 col-sm-6">
         <h5 class="display-4"><?php echo $trek_name; ?></h5>
