@@ -41,13 +41,13 @@ if (isset($_GET['trek_id'])) {
 
   <div class="mx-3">
     <div class="row">
-      <div class="col-6 d-none d-sm-block">
+      <div class="col-6 d-none d-md-block">
         <img src="organizer/trek-images/<?php echo $trek_image; ?>" class="img-fluid">
       </div>
-      <div class="col-12 col-sm-6">
-        <h5 class="display-4"><?php echo $trek_name; ?></h5>
+      <div class="col-12 col-md-6">
+        <h5 class="display-4" style="font-weight: 400;"><?php echo $trek_name; ?></h5>
         <p class="lead">
-          <span style="font-size: 2rem;">About</span>
+          <span style="font-size: 2rem; font-weight: 400;">About</span>
           <br>
           <?php echo $trek_about; ?>
         </p>
@@ -56,14 +56,63 @@ if (isset($_GET['trek_id'])) {
 
     <div class="row">
       <div class="col-12 text-center">
+        <p class="lead" style="font-size: 2rem; font-weight: 400;">
+          <?php echo $trek_departure; ?>
+          <i class="fa fa-angle-double-right"></i>
+          <?php echo $trek_arrival; ?>
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 text-center">
         <p class="lead" style="font-size: 1.5rem;">
-          <span style="font-size: 2rem;">Location</span>
+          <span style="font-size: 2rem; font-weight: 400;">Altitude</span>
+          <br>
+          <?php echo $trek_altitude; ?>
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 text-center">
+        <p class="lead" style="font-size: 1.5rem;">
+          <span style="font-size: 2rem; font-weight: 400;">Cost</span>
+          <br>
+          &#8377;<?php echo $trek_price; ?>
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 text-center">
+        <p class="lead" style="font-size: 1.5rem;">
+          <span style="font-size: 2rem; font-weight: 400;">Location</span>
           <br>
           <?php echo $trek_location; ?>
         </p>
       </div>
     </div>
 
+    <div class="row">
+      <div class="col-12 text-center">
+        <p class="lead" style="font-size: 1.5rem;">
+          <span style="font-size: 2rem; font-weight: 400;">Type</span>
+          <br>
+          <?php echo $trek_type; ?>
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 text-center">
+        <p class="lead" style="font-size: 1.5rem;">
+          <span style="font-size: 2rem; font-weight: 400;">Views</span>
+          <br>
+          <?php echo $trek_views; ?>
+        </p>
+      </div>
+    </div>
 
   </div>
 
