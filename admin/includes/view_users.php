@@ -14,13 +14,27 @@
   <thead>
     <td>Delete</th>
     <th class="text-center">Id</th>
-    <th class="text-center">Name</th>
+    <th class="text-center">Firstname</th>
+    <th class="text-center">Lastname</th>
+    <th class="text-center">Username</th>
+    <th class="text-center">Email</th>
+    <th class="text-center">Phone</th>
+    <th class="text-center">Image</th>
+    <th class="text-center">DOB</th>
+    <th class="text-center">Role</th>
   </thead>
   <tbody>
     <?php
     while ($row = mysqli_fetch_assoc($select_users)) {
-      $user_id = $row['user_id'];
-      $username = $row['username'];
+      $user_id          = $row['user_id'];
+      $username         = $row['username'];
+      $user_firstname   = $row['user_firstname'];
+      $user_lastname    = $row['user_lastname'];
+      $user_email       = $row['user_email'];
+      $user_phonenumber = $row['user_phonenumber'];
+      $user_image       = $row['user_image'];
+      $user_dob         = date("d-m-Y",strtotime($row['user_dob']));
+      $user_role        = $row['user_role'];
     ?>
       <tr>
         <td class="text-center">
@@ -29,7 +43,28 @@
           </a>
         </td>
         <td class="text-center"><?php echo $user_id; ?></td>
+        <td class="text-center"><?php echo $user_firstname; ?></td>
+        <td class="text-center"><?php echo $user_lastname; ?></td>
         <td class="text-center"><?php echo $username; ?></td>
+        <td class="text-center"><?php echo $user_email; ?></td>
+        <td class="text-center"><?php echo $user_phonenumber; ?></td>
+        <td class="text-center"><img src="../images/<?php echo $user_image; ?>" width="200" height="100"></td>
+        <td class="text-center"><?php echo $user_dob; ?></td>
+        <td class="text-center">
+          <a href="./users.php?roler_id=<?php echo $user_id; ?>&role=<?php echo $user_role; ?>">
+            <span class="badge badge-pill badge-danger" style="background-color:
+              <?php if ($user_role == 'User'): ?>
+                <?php echo '#28a745'; ?>
+              <?php endif; ?>
+
+              <?php if ($user_role == 'Organizer'): ?>
+                <?php echo '#007bff'; ?>
+                <?php endif; ?>
+              ;">
+            <?php echo $user_role; ?>
+          </span>
+          </a>
+        </td>
       </tr>
 
     <?php
@@ -43,19 +78,13 @@
 
 <?php
   if (isset($_GET['delete'])) {
-    $trek_id = $_GET['delete'];
-
-    $stmt = mysqli_prepare($connection, "DELETE FROM users WHERE user_id = ?");
-    mysqli_stmt_bind_param($stmt, "i", $user_id);
-    mysqli_stmt_execute($stmt);
-    confirmQuery($stmt);
-    header("Location: users.php");
+    $user_id = $_GET['delete'];
+    deleteUser($user_id);
   }
 
-  if (isset($_GET['status'])) {
-    $trek_id = $_GET['trek_id'];
-    $trek_status = $_GET['status'];
-    reverseStatus($trek_id, $trek_status);
-    header("Location: users.php");
+  if (isset($_GET['roler_id'])) {
+    $user_id = $_GET['roler_id'];
+    $user_role = $_GET['role'];
+    changeRole($user_id, $user_role);
   }
 ?>
