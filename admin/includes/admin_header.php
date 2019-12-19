@@ -1,6 +1,6 @@
 <?php include '../includes/db.php'; ?>
 <?php include '../includes/functions.php'; ?>
-
+<?php include 'includes/admin_functions.php'; ?>
 <!doctype html>
 <html lang="en">
   <head>
