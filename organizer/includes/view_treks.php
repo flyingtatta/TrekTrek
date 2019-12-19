@@ -4,7 +4,8 @@
 </h1>
 
 <?php
-  $query = "SELECT * FROM treks ORDER BY trek_id DESC";
+  $user_id = $_SESSION['user_id'];
+  $query = "SELECT * FROM treks WHERE trek_organizer_id = '$user_id' ORDER BY trek_id DESC";
   $select_treks = mysqli_query($connection, $query);
   confirmQuery($query);
 ?>
@@ -118,18 +119,12 @@
 <?php
   if (isset($_GET['delete'])) {
     $trek_id = $_GET['delete'];
-
-    $stmt = mysqli_prepare($connection, "DELETE FROM treks WHERE trek_id = ?");
-    mysqli_stmt_bind_param($stmt, "i", $trek_id);
-    mysqli_stmt_execute($stmt);
-    confirmQuery($stmt);
-    header("Location: treks.php");
+    deleteTrek($trek_id);
   }
 
   if (isset($_GET['status'])) {
     $trek_id = $_GET['trek_id'];
     $trek_status = $_GET['status'];
     reverseStatus($trek_id, $trek_status);
-    header("Location: treks.php");
   }
 ?>
