@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
               Users
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="">View All Users</a>
+              <a class="dropdown-item" href="/TrekTrek/admin/users.php?source=view_treks">View All Users</a>
               <a class="dropdown-item" href="">Add User</a>
             </div>
           </li>
