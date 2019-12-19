@@ -173,6 +173,13 @@
       <div class="col-12 col-sm-12 form-group">
         <label for="">Password</label>
         <input type="password" name="user_password" class="form-control">
+        <p class="text-danger">
+          <?php
+            if (isset($error['user_password'])) {
+              echo $error['user_password'];
+            }
+          ?>
+        </p>
       </div>
     </div>
 
