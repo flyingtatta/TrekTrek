@@ -1,4 +1,28 @@
 
+<?php
+if (!isset($_SESSION['user_role'])) {
+  $query = "SELECT * FROM treks WHERE trek_status = 'On'";
+  $select_all_treks = mysqli_query($connection, $query);
+  confirmQuery($select_all_treks);
+}else {
+  if ($_SESSION['user_role'] == 'Organizer') {
+    $query = "SELECT * FROM treks";
+    $select_all_treks = mysqli_query($connection, $query);
+    confirmQuery($select_all_treks);
+  }else if ($_SESSION['user_role'] == 'User') {
+    $query = "SELECT * FROM treks WHERE trek_status = 'On'";
+    $select_all_treks = mysqli_query($connection, $query);
+    confirmQuery($select_all_treks);
+  }else if ($_SESSION['user_role'] == 'Admin') {
+    $query = "SELECT * FROM treks";
+    $select_all_treks = mysqli_query($connection, $query);
+    confirmQuery($select_all_treks);
+  }
+}
+
+?>
+
+
 <main class="mx-3">
   <div class="row">
     <?php
@@ -45,8 +69,11 @@
               Know More!
             </a> -->
 
+            <?php
+            $trek_name_trim = str_replace(" ", "$trek_id", $trek_name);
+            ?>
             <div class="d-flex justify-content-between">
-              <a href="<?php echo "#".$trek_name.$trek_id; ?>" data-toggle="modal" class="btn btn-primary">
+              <a href="<?php echo "#".$trek_name_trim.$trek_id; ?>" data-toggle="modal" class="btn btn-primary">
                 Quick Details!
               </a>
 
@@ -68,7 +95,7 @@
           ?> -->
 
           <!-- Modal -->
-          <div class="modal fade" id="<?php echo $trek_name.$trek_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+          <div class="modal fade" id="<?php echo $trek_name_trim.$trek_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 
             <div class="modal-dialog modal-dialog-scrollable" role="document">
               <div class="modal-content">

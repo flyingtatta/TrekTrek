@@ -128,7 +128,7 @@ if (isset($_POST['submit'])) {
     <div class="row">
       <div class="col-12 col-sm-12 form-group">
         <label for="">About the Trek:</label>
-        <textarea name="trek_about" class="form-control" rows="6" cols="25"><?php if(isset($_POST['submit'])){ echo $_POST['trek_about']; } ?></textarea>
+        <textarea name="trek_about" class="form-control" rows="6" cols="25" id="body"><?php if(isset($_POST['submit'])){ echo $_POST['trek_about']; } ?></textarea>
         <p class="text-danger">
           <?php
           if (isset($error['trek_about'])) {

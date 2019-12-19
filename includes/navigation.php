@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
           </li>
         <?php endif; ?>
 
-        <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] != 'User'): ?>
+        <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Organizer'): ?>
           <li class="nav-item">
             <a class="nav-link" href="organizer">Organizer</a>
           </li>
@@ -37,6 +37,22 @@ if (isset($_POST['submit'])) {
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="organizer/treks.php?source=view_treks">View All Treks</a>
               <a class="dropdown-item" href="organizer/treks.php?source=add_treks">Add Treks</a>
+            </div>
+          </li>
+
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin'): ?>
+          <li class="nav-item">
+            <a class="nav-link" href="admin">Admin</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Users
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="">View All Users</a>
+              <a class="dropdown-item" href="">Add User</a>
             </div>
           </li>
 
