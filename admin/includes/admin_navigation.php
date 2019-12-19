@@ -21,8 +21,8 @@
             Users
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="">View All Users</a>
-            <a class="dropdown-item" href="">Add User</a>
+            <a class="dropdown-item" href="./users.php?source=view_all_users">View All Users</a>
+            <a class="dropdown-item" href="./users.php?source=add_users">Add User</a>
           </div>
         </li>
 
@@ -44,6 +44,7 @@
               <?php echo $_SESSION['user_firstname'] . ". " . $_SESSION['user_lastname']; ?>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="../profile.php">Profile</a>
               <a class="dropdown-item" href="../includes/logout.php">Logout</a>
             </div>
           </li>
