@@ -3,7 +3,7 @@
    session_start();
 ?>
 <?php
-if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin'){
+if (isAdmin()){
   include 'includes/admin_navigation.php';
 
   if (isset($_GET['source'])) {

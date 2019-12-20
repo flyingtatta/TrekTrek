@@ -22,7 +22,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="treks.php?source=view_treks">View All Treks</a>
-            <a class="dropdown-item" href="treks.php?source=add_treks">Add Treks</a>            
+            <a class="dropdown-item" href="treks.php?source=add_treks">Add Treks</a>
           </div>
         </li>
 
@@ -31,7 +31,7 @@
 
 
 
-      <?php if (!isset($_SESSION['user_email'])): ?>
+      <?php if (isLoggedout()): ?>
         <form class="form-inline" action="" method="post">
           <input class="form-control mr-2" type="text"     placeholder="Email"    name="user_email" >
           <input class="form-control mr-2" type="password" placeholder="Password" name="user_password" >

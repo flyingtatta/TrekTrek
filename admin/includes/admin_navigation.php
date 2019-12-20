@@ -30,7 +30,7 @@
 
 
 
-      <?php if (!isset($_SESSION['user_email'])): ?>
+      <?php if (isLoggedout()): ?>
         <form class="form-inline" action="" method="post">
           <input class="form-control mr-2" type="text"     placeholder="Email"    name="user_email" >
           <input class="form-control mr-2" type="password" placeholder="Password" name="user_password" >
