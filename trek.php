@@ -16,9 +16,6 @@ if (isset($_GET['trek_id'])) {
 
   }
 
-
-
-
   $query = "SELECT * FROM treks WHERE trek_id = $trek_id";
   $select_trek = mysqli_query($connection, $query);
   confirmQuery($select_trek);
