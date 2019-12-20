@@ -3,7 +3,7 @@ if (isset($_POST['submit'])) {
   $trek_name        = escape($_POST['trek_name']);
   $trek_departure   = escape($_POST['trek_departure']);
   $trek_arrival     = escape($_POST['trek_arrival']);
-  $trek_about       = $_POST['trek_about'];
+  $trek_about       = escape($_POST['trek_about']);
   $trek_location    = escape($_POST['trek_location']);
 
   $dateDiff = strtotime($trek_departure) - strtotime($trek_arrival);
