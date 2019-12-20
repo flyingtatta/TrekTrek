@@ -12,10 +12,11 @@
   function deleteUser($user_id){
     global $connection;
 
-    $stmt = mysqli_prepare($connection, "DELETE FROM users WHERE user_id = ?");
-    mysqli_stmt_bind_param($stmt, "i", $user_id);
-    mysqli_stmt_execute($stmt);
-    confirmQuery($stmt);
+    $deletestmt = mysqli_prepare($connection, "DELETE FROM users WHERE user_id = ?");
+    mysqli_stmt_bind_param($deletestmt, "i", $user_id);
+    mysqli_stmt_execute($deletestmt);
+    confirmQuery($deletestmt);
+
     header("Location: users.php");
   }
 
@@ -31,9 +32,14 @@
   function deleteTrekOrganizer($user_id){
     global $connection;
 
-    $stmt = mysqli_prepare($connection, "DELETE FROM trek_organizer WHERE organizer_id = ?");
+    $deletestmt = mysqli_prepare($connection, "DELETE FROM trek_organizer WHERE organizer_id = ?");
+    mysqli_stmt_bind_param($deletestmt, "i", $user_id);
+    mysqli_stmt_execute($deletestmt);
+
+    $stmt = mysqli_prepare($connection, "DELETE FROM treks WHERE trek_organizer_id = ?");
     mysqli_stmt_bind_param($stmt, "i", $user_id);
     mysqli_stmt_execute($stmt);
+    confirmQuery($stmt);
   }
 
   function changeRole($user_id, $user_role){
@@ -41,9 +47,9 @@
     if ($user_role == 'Organizer') {
 
       // Changing the role to user
-      $temp_role = 'User';
+      $user_role = 'User';
 
-      updateUserRole($temp_role, $user_id);
+      updateUserRole($user_role, $user_id);
 
       //deleting the data in the trek organizer database where user id is samme
       deleteTrekOrganizer($user_id);
@@ -53,9 +59,9 @@
     }else if ($user_role == 'User') {
 
       // Changing to organizer
-      $temp_role = 'Organizer';
+      $user_role = 'Organizer';
 
-      updateUserRole($temp_role, $user_id);
+      updateUserRole($user_role, $user_id);
 
       $stmt = mysqli_prepare($connection, "SELECT * FROM users WHERE user_id = ?");
       mysqli_stmt_bind_param($stmt, "i", $user_id);
@@ -106,7 +112,7 @@
       insertDataIntoUsers($user_firstname, $user_lastname, $username, $user_email, $user_phonenumber, $user_image, $user_dob, $user_password, $user_role);
 
       selectUserID($user_email);
-      
+
     }else if ($user_role == 'User') {
       insertDataIntoUsers($user_firstname, $user_lastname, $username, $user_email, $user_phonenumber, $user_image, $user_dob, $user_password, $user_role);
     }

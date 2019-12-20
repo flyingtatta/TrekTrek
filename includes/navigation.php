@@ -2,7 +2,6 @@
 if (isset($_POST['submit'])) {
   $user_email    = $_POST['user_email'];
   $user_password = $_POST['user_password'];
-
   loginUser($user_email, $user_password);
 }
 ?>
@@ -27,35 +26,24 @@ if (isset($_POST['submit'])) {
         <?php endif; ?>
 
         <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Organizer'): ?>
+
           <li class="nav-item">
             <a class="nav-link" href="organizer">Organizer</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Treks
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="organizer/treks.php?source=view_treks">View All Treks</a>
-              <a class="dropdown-item" href="organizer/treks.php?source=add_treks">Add Treks</a>
-            </div>
+          <li class="nav-item">
+            <a class="nav-link" href="organizer/treks.php">Treks</a>
           </li>
 
         <?php endif; ?>
+
 
         <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin'): ?>
           <li class="nav-item">
             <a class="nav-link" href="admin">Admin</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Users
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="admin/users.php?source=view_users">View All Users</a>
-              <a class="dropdown-item" href="admin/users.php?source=add_users">Add User</a>
-            </div>
+          <li class="nav-item">
+            <a class="nav-link" href="admin/users.php">Users</a>
           </li>
-
         <?php endif; ?>
 
       </ul>
@@ -70,14 +58,14 @@ if (isset($_POST['submit'])) {
         </form>
       <?php else: ?>
         <ul class="nav nav-pills mr-2">
-          <li class="nav-item dropdown">
-            <a class="text-light nav-link dropdown-toggle" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">
-              <img src="images/<?php echo $_SESSION['user_image']; ?>" width="35" height="35" style="border-radius:50%;">
+          <li class="nav-item dropdown active">
+            <a class="nav-link text-light text-decoration-none dropdown-toggle" href='' id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img src="./images/<?php echo $_SESSION['user_image']; ?>" width="35" height="35" style="border-radius:50%;">
               <?php echo $_SESSION['user_firstname'] . ". " . $_SESSION['user_lastname']; ?>
             </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="profile.php">Profile</a>
-              <a class="dropdown-item" href="includes/logout.php">Logout</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="../profile.php">Profile</a>
+              <a class="dropdown-item" href="./includes/logout.php">Logout</a>
             </div>
           </li>
         </ul>

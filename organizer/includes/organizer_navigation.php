@@ -22,8 +22,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="treks.php?source=view_treks">View All Treks</a>
-            <a class="dropdown-item" href="treks.php?source=add_treks">Add Treks</a>
-            <a class="dropdown-item" href="">Something else here</a>
+            <a class="dropdown-item" href="treks.php?source=add_treks">Add Treks</a>            
           </div>
         </li>
 
