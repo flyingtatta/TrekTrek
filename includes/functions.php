@@ -1,5 +1,60 @@
 <?php
 
+function isLoggedout(){
+  global $connection;
+
+  if (empty($_SESSION['user_role'])) {
+    return true;
+  }
+  return false;
+}
+
+function isOrganizer(){
+  global $connection;
+
+  if ($_SESSION['user_role'] === 'Organizer') {
+    return true;
+  }
+  return false;
+}
+
+function isAdmin(){
+  global $connection;
+
+  if ($_SESSION['user_role'] === 'Admin') {
+    return true;
+  }
+  return false;
+}
+
+
+function recordCount($table_name){
+  global $connection;
+
+  $query = mysqli_query($connection, "SELECT * FROM $table_name");
+  $count = mysqli_num_rows($query);
+  confirmQuery($query);
+  return $count;
+}
+
+function recordCountFor($table_name, $where_clause,$condition){
+  global $connection;
+
+  $query = mysqli_query($connection, "SELECT * FROM $table_name WHERE $where_clause = '$condition'");
+  $count = mysqli_num_rows($query);
+  confirmQuery($query);
+  return $count;
+}
+
+function recordCountForSpecific($table_name, $what){
+  global $connection;
+
+  $query = mysqli_query($connection, "SELECT '$what' FROM $table_name");
+  $count = mysqli_num_rows($query);
+  confirmQuery($query);
+  return $count;
+}
+
 
 function escape($string){
   global $connection;
