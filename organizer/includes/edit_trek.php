@@ -14,7 +14,7 @@ if (isset($_GET['trek_id'])) {
 
     $trek_image       = $_FILES['image']['name'];
     $tmp_trek_image   = $_FILES['image']['tmp_name'];
-    $trek_type        = escape($_POST['trek_type']);
+    $trek_type_id     = escape($_POST['trek_type_id']);
     $type_of_altitude = escape($_POST['type-of-altitude']);
     $trek_altitude    = escape($_POST['trek_altitude']);
     $trek_altitude    = $trek_altitude . $type_of_altitude;
@@ -72,7 +72,7 @@ if (isset($_GET['trek_id'])) {
     }
 
     if (empty($error)) {
-      updateTrek($trek_id,$trek_name,$trek_departure,$trek_arrival,$trek_about,$trek_location,$trek_duration,$trek_image,$tmp_trek_image,$trek_type,$trek_altitude,$trek_price,$trek_status);
+      updateTrek($trek_id,$trek_name,$trek_departure,$trek_arrival,$trek_about,$trek_location,$trek_duration,$trek_image,$tmp_trek_image,$trek_type_id,$trek_altitude,$trek_price,$trek_status);
     }
   }
   ?>
@@ -166,7 +166,7 @@ if (isset($_GET['trek_id'])) {
       <div class="row">
         <div class="col-12 col-sm-12 form-group">
           <label for="">About the Trek:</label>
-          <textarea name="trek_about" class="form-control" rows="6" cols="25"><?php
+          <textarea name="trek_about" class="form-control" rows="6" cols="25" id="body"><?php
             if(isset($_POST['submit'])){
               echo $_POST['trek_about'];
             }else{
@@ -206,10 +206,21 @@ if (isset($_GET['trek_id'])) {
       <div class="row">
         <div class="col-12 col-sm-6 form-group">
           <label for="">Type of Trek:</label>
-          <select class="form-control" name="trek_type">
-            <option value="Long Day">Long Day Trek</option>
-            <option value="Short Day">Short Day Trek</option>
-            <option value="Camping">Camping Trek</option>
+          <select class="form-control" name="trek_type_id">
+              <?php
+                $query = mysqli_query($connection, "SELECT * FROM trek_type");
+                confirmQuery($query);
+
+                while($row = mysqli_fetch_assoc($query)){
+                  $trek_type_id = $row['trek_type_id'];
+                  $trek_type_name = $row['trek_type_name'];
+              ?>
+
+              <option value="<?php echo $trek_type_id; ?>"><?php echo $trek_type_name; ?></option>
+
+              <?php
+                }
+              ?>
           </select>
         </div>
 
