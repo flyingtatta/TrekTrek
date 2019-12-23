@@ -20,6 +20,15 @@ if (!isset($_SESSION['user_role'])) {
   }
 }
 
+if (isset($_GET['type'])) {
+  $type = $_GET['type'];
+  $query = "SELECT * FROM treks WHERE trek_type_id = '$type'";
+  $select_all_treks = mysqli_query($connection, $query);
+  confirmQuery($select_all_treks);
+}
+
+
+
 ?>
 
 
@@ -35,7 +44,7 @@ if (!isset($_SESSION['user_role'])) {
       $trek_location  = $row['trek_location'];
       $trek_duration  = $row['trek_duration'];
       $trek_image     = $row['trek_image'];
-      $trek_type      = $row['trek_type'];
+      $trek_type_id   = $row['trek_type_id'];
       $trek_views     = $row['trek_views'];
       $trek_altitude  = $row['trek_altitude'];
       $trek_price     = $row['trek_price'];
@@ -152,7 +161,7 @@ if (!isset($_SESSION['user_role'])) {
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Type
-                      <span class="badge badge-primary badge-pill"><?php echo $trek_type; ?></span>
+                      <span class="badge badge-primary badge-pill"><?php trekTypeNameDisplay($trek_type_id); ?></span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Views

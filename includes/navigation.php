@@ -19,6 +19,25 @@ if (isset($_POST['submit'])) {
           <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
         </li>
 
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Type-o-trek
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <?php
+              $query = mysqli_query($connection, "SELECT * FROM trek_type");
+              confirmQuery($query);
+              while($row = mysqli_fetch_assoc($query)){
+              $trek_type_id = $row['trek_type_id'];
+            ?>
+              <a class="dropdown-item" href="./index.php?type=<?php echo $trek_type_id; ?>"><?php trekTypeNameDisplay($trek_type_id); ?></a>
+            <?php
+              }
+            ?>
+
+          </div>
+        </li>
+
       <?php if (isLoggedout()): ?>
         <li class="nav-item">
           <a class="nav-link" href="register.php">Register</a>
@@ -30,9 +49,16 @@ if (isset($_POST['submit'])) {
         <li class="nav-item">
           <a class="nav-link" href="organizer">Organizer</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="organizer/treks.php">Treks</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Treks
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="organizer/treks.php?source=view_treks">View All Treks</a>
+            <a class="dropdown-item" href="organizer/treks.php?source=add_treks">Add Treks</a>
+          </div>
         </li>
+
 
       <?php elseif (isAdmin()): ?>
 
