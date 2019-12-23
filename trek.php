@@ -28,7 +28,7 @@ if (isset($_GET['trek_id'])) {
     $trek_location  = $row['trek_location'];
     $trek_duration  = $row['trek_duration'];
     $trek_image     = $row['trek_image'];
-    $trek_type      = $row['trek_type'];
+    $trek_type_id   = $row['trek_type_id'];
     $trek_views     = $row['trek_views'];
     $trek_altitude  = $row['trek_altitude'];
     $trek_price     = $row['trek_price'];
@@ -96,7 +96,9 @@ if (isset($_GET['trek_id'])) {
         <p class="lead" style="font-size: 1.5rem;">
           <span style="font-size: 2rem; font-weight: 400;">Type</span>
           <br>
-          <?php echo $trek_type; ?>
+          <?php
+            trekTypeNameDisplay($trek_type_id);
+          ?>
         </p>
       </div>
     </div>
