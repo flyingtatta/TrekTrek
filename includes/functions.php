@@ -1,5 +1,14 @@
 <?php
 
+function trekTypeNameDisplay($trek_type_id){
+  global $connection;
+
+  $query = mysqli_query($connection, "SELECT * FROM trek_type WHERE trek_type_id = $trek_type_id");
+  confirmQuery($query);
+  $row = mysqli_fetch_assoc($query);
+  echo $row['trek_type_name'];
+}
+
 function isLoggedout(){
   global $connection;
 
@@ -12,8 +21,10 @@ function isLoggedout(){
 function isOrganizer(){
   global $connection;
 
-  if ($_SESSION['user_role'] === 'Organizer') {
-    return true;
+  if (isset($_SESSION['user_role'])) {
+    if ($_SESSION['user_role'] === 'Organizer') {
+      return true;
+    }
   }
   return false;
 }
@@ -21,8 +32,10 @@ function isOrganizer(){
 function isAdmin(){
   global $connection;
 
-  if ($_SESSION['user_role'] === 'Admin') {
-    return true;
+  if (isset($_SESSION['user_role'])) {
+    if ($_SESSION['user_role'] === 'Admin') {
+      return true;
+    }
   }
   return false;
 }
@@ -41,15 +54,6 @@ function recordCountFor($table_name, $where_clause,$condition){
   global $connection;
 
   $query = mysqli_query($connection, "SELECT * FROM $table_name WHERE $where_clause = '$condition'");
-  $count = mysqli_num_rows($query);
-  confirmQuery($query);
-  return $count;
-}
-
-function recordCountForSpecific($table_name, $what){
-  global $connection;
-
-  $query = mysqli_query($connection, "SELECT '$what' FROM $table_name");
   $count = mysqli_num_rows($query);
   confirmQuery($query);
   return $count;
