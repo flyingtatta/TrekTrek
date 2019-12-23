@@ -5,8 +5,9 @@ session_start();
 if (isAdmin()){
   include 'includes/admin_navigation.php';
 
-  $users = recordCount('users');
+  $accounts = recordCount('users');
   //tablename, where data, where clause
+  $users = recordCountFor('users', 'user_role','User');
   $organizers = recordCountFor('users', 'user_role','Organizer');
   $admin = recordCountFor('users', 'user_role','Admin');
   $treks = recordCount('treks');
@@ -21,12 +22,12 @@ if (isAdmin()){
 
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
-        ['Date', 'Count'],
+        ['', 'Count'],
 
         <?php
 
-        $element_text = ['Users', 'Organizers', 'Admin', 'Treks'];
-        $element_count = [$users,$organizers,$admin,$treks];
+        $element_text = ['Accounts','Users','Organizers', 'Admin', 'Treks'];
+        $element_count = [$accounts,$users,$organizers,$admin,$treks];
 
         for($i = 0; $i < sizeof($element_text); $i++){
           echo "['{$element_text[$i]}'" . ", "."{$element_count[$i]}],";
@@ -42,7 +43,6 @@ if (isAdmin()){
       };
 
       var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-
       chart.draw(data, google.charts.Bar.convertOptions(options));
     }
     </script>
