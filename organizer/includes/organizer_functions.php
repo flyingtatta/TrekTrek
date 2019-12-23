@@ -1,6 +1,6 @@
 <?php
 
-function registerTrek($trek_name,$trek_departure,$trek_arrival,$trek_about,$trek_location,$trek_duration,$trek_image,$tmp_trek_image,$trek_type,$trek_altitude,$trek_price,$trek_status){
+function registerTrek($trek_name,$trek_departure,$trek_arrival,$trek_about,$trek_location,$trek_duration,$trek_image,$tmp_trek_image,$trek_type_id,$trek_altitude,$trek_price,$trek_status){
 
   global $connection;
 
@@ -11,14 +11,14 @@ function registerTrek($trek_name,$trek_departure,$trek_arrival,$trek_about,$trek
   $row = mysqli_fetch_assoc($select_trek_organizer_id);
   $trek_organizer_id = $row['organizer_id'];
 
-  $stmt = mysqli_prepare($connection, "INSERT INTO treks(trek_name,trek_departure,trek_arrival,trek_about,trek_location,trek_duration,trek_image,trek_type,trek_altitude,trek_price,trek_status,trek_organizer_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
-  mysqli_stmt_bind_param($stmt, "sssssssssssi", $trek_name,$trek_departure,$trek_arrival,$trek_about,$trek_location,$trek_duration,$trek_image,$trek_type,$trek_altitude,$trek_price,$trek_status,$trek_organizer_id);
+  $stmt = mysqli_prepare($connection, "INSERT INTO treks(trek_name,trek_departure,trek_arrival,trek_about,trek_location,trek_duration,trek_image,trek_type_id,trek_altitude,trek_price,trek_status,trek_organizer_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
+  mysqli_stmt_bind_param($stmt, "sssssssisssi", $trek_name,$trek_departure,$trek_arrival,$trek_about,$trek_location,$trek_duration,$trek_image,$trek_type_id,$trek_altitude,$trek_price,$trek_status,$trek_organizer_id);
   mysqli_stmt_execute($stmt);
   confirmQuery($stmt);
   header("Location: treks.php");
 }
 
-function updateTrek($trek_id,$trek_name,$trek_departure,$trek_arrival,$trek_about,$trek_location,$trek_duration,$trek_image,$tmp_trek_image,$trek_type,$trek_altitude,$trek_price,$trek_status){
+function updateTrek($trek_id,$trek_name,$trek_departure,$trek_arrival,$trek_about,$trek_location,$trek_duration,$trek_image,$tmp_trek_image,$trek_type_id,$trek_altitude,$trek_price,$trek_status){
   global $connection;
   if (empty($trek_image)) {
     $query = mysqli_query($connection, "SELECT trek_image FROM treks WHERE trek_id = $trek_id");
@@ -29,8 +29,8 @@ function updateTrek($trek_id,$trek_name,$trek_departure,$trek_arrival,$trek_abou
   }
   move_uploaded_file($tmp_trek_image, "trek-images/$trek_image");
 
-  $stmt = mysqli_prepare($connection, "UPDATE treks SET trek_name = ?, trek_departure = ?, trek_arrival = ?,trek_about = ?, trek_location = ?,trek_duration = ?,trek_image = ?,trek_type = ?,trek_altitude = ?,trek_price = ?,trek_status = ? WHERE trek_id = ?;");
-  mysqli_stmt_bind_param($stmt, "sssssssssssi", $trek_name,$trek_departure,$trek_arrival,$trek_about,$trek_location,$trek_duration,$trek_image,$trek_type,$trek_altitude,$trek_price,$trek_status,$trek_id);
+  $stmt = mysqli_prepare($connection, "UPDATE treks SET trek_name = ?, trek_departure = ?, trek_arrival = ?,trek_about = ?, trek_location = ?,trek_duration = ?,trek_image = ?,trek_type_id = ?,trek_altitude = ?,trek_price = ?,trek_status = ? WHERE trek_id = ?;");
+  mysqli_stmt_bind_param($stmt, "sssssssisssi", $trek_name,$trek_departure,$trek_arrival,$trek_about,$trek_location,$trek_duration,$trek_image,$trek_type_id,$trek_altitude,$trek_price,$trek_status,$trek_id);
   mysqli_stmt_execute($stmt);
   confirmQuery($stmt);
   header("Location: treks.php");
