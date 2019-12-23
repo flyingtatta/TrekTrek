@@ -42,7 +42,7 @@
       $trek_location  = $row['trek_location'];
       $trek_duration  = $row['trek_duration'];
       $trek_image     = $row['trek_image'];
-      $trek_type      = $row['trek_type'];
+      $trek_type_id   = $row['trek_type_id'];
       $trek_altitude  = $row['trek_altitude'];
       $trek_price     = $row['trek_price'];
       $trek_status    = $row['trek_status'];
@@ -72,7 +72,11 @@
         <td class="text-center" ><?php echo $trek_location; ?></td>
         <td class="text-center" ><?php echo $trek_duration; ?></td>
         <td class="text-center" ><img src="trek-images/<?php echo $trek_image; ?>" width="200" height="100"></td>
-        <td class="text-center" ><?php echo $trek_type; ?></td>
+        <td class="text-center" >
+          <?php
+            trekTypeNameDisplay($trek_type_id);
+          ?>
+        </td>
         <td class="text-center" ><?php echo $trek_altitude; ?></td>
         <td class="text-center" >&#8377;<?php echo $trek_price; ?></td>
         <td class="text-center">
