@@ -1,4 +1,20 @@
 <?php
+function recordCountTreks($table_name, $trek_organizer_id){
+  global $connection;
+
+  $query = mysqli_query($connection, "SELECT * FROM $table_name WHERE trek_organizer_id = $trek_organizer_id");
+  $count = mysqli_num_rows($query);
+  confirmQuery($query);
+  return $count;
+}
+
+function recordCountForTreks($table_name,$where,$trek_status, $trek_organizer_id){
+  global $connection;
+  $query = mysqli_query($connection, "SELECT * FROM $table_name WHERE trek_organizer_id = '$trek_organizer_id' AND trek_status = '$trek_status'");
+  $count = mysqli_num_rows($query);
+  confirmQuery($query);
+  return $count;
+}
 
 function registerTrek($trek_name,$trek_departure,$trek_arrival,$trek_about,$trek_location,$trek_duration,$trek_image,$tmp_trek_image,$trek_type_id,$trek_altitude,$trek_price,$trek_status){
 
