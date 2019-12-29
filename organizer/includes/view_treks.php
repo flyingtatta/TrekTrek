@@ -4,10 +4,20 @@
 </h1>
 
 <?php
+if (!isset($_POST['search'])) {
   $user_id = $_SESSION['user_id'];
   $query = "SELECT * FROM treks WHERE trek_organizer_id = '$user_id' ORDER BY trek_id DESC";
   $select_treks = mysqli_query($connection, $query);
   confirmQuery($query);
+}else if(isset($_POST['search'])){
+  $user_id = $_SESSION['user_id'];
+  $search_trek = $_POST['search_tags'];
+
+  $query = "SELECT * FROM treks WHERE trek_organizer_id = '$user_id' AND trek_tags LIKE '%$search_trek%' OR trek_status LIKE '%$search_trek%'  OR trek_name LIKE '%$search_trek%'ORDER BY trek_id DESC";
+  $select_treks = mysqli_query($connection, $query);
+  confirmQuery($query);
+}
+
 ?>
 
 
@@ -50,9 +60,14 @@
 
       <tr>
         <td class="text-center">
-          <a href="treks.php?delete=<?php echo $trek_id; ?>">
+          <form class="" action="" method="post" onsubmit="return confirm('Are you sure you want to delete?');">
+            <input type="hidden" name="trek_id" value="<?php echo $trek_id; ?>">
+            <input type="submit" name="delete" value="Delete" class="btn btn-danger">
+          </form>
+
+          <!-- <a href="treks.php?delete=<?php echo $trek_id; ?>">
             <i class="fa fa-trash text-danger fa-lg"></i>
-          </a>
+          </a> -->
         </td>
         <td class="text-center">
           <a href="./treks.php?source=edit_treks&trek_id=<?php echo $trek_id; ?>">
@@ -80,19 +95,24 @@
         <td class="text-center" ><?php echo $trek_altitude; ?></td>
         <td class="text-center" >&#8377;<?php echo $trek_price; ?></td>
         <td class="text-center">
-          <a href="treks.php?status=<?php echo $trek_status; ?>&trek_id=<?php echo $trek_id; ?>">
+
+
+          <form class="" action="" method="post" onsubmit="return confirm('Are you sure you want to change status?');">
+            <input type="hidden" name="trek_id" value="<?php echo $trek_id; ?>">
+            <input type="hidden" name="trek_status" value="<?php echo $trek_status; ?>">
             <span class="badge badge-primary badge-pill" style="background-color:
             <?php if ($trek_status == 'On'): ?>
-            <?php echo "#28a745";?>
+              <?php echo "#28a745";?>
             <?php else: ?>
               <?php echo "#dc3545";?>
             <?php endif; ?>">
-            <?php echo $trek_status; ?>
+              <input type="submit" name="change_status" value="<?php echo $trek_status; ?>" style="background: none; border: none; color: white; font-size: 0.9rem; outline:none;">
             </span>
-          </a>
+          </form>
+
         </td>
 
-        <td class="text-center" >
+        <td class="text-center">
           <span class="badge badge-primary badge-pill" style="background-color:
           <?php if ($trek_views >= 0 && $trek_views < 25): ?>
           <?php echo "#dc3545";?>
@@ -105,7 +125,7 @@
           <?php if ($trek_views >= 50): ?>
           <?php echo "#28a745"; ?>
           <?php endif; ?>
-          ;">
+          ; font-size: 0.9rem;">        
             <?php echo $trek_views; ?>
           </span>
         </td>
@@ -121,14 +141,14 @@
 </div>
 
 <?php
-  if (isset($_GET['delete'])) {
-    $trek_id = $_GET['delete'];
+  if (isset($_POST['delete'])) {
+    $trek_id = $_POST['trek_id'];
     deleteTrek($trek_id);
   }
 
-  if (isset($_GET['status'])) {
-    $trek_id = $_GET['trek_id'];
-    $trek_status = $_GET['status'];
+  if (isset($_POST['change_status'])) {
+    $trek_id = $_POST['trek_id'];
+    $trek_status = $_POST['trek_status'];
     reverseStatus($trek_id, $trek_status);
   }
 ?>
