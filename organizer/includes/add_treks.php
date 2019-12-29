@@ -187,7 +187,7 @@ if (isset($_POST['submit'])) {
     <div class="row">
 
       <div class="col-12 col-sm-6 form-group">
-        <label for="">Altitude (in Ft):</label>
+        <label for="">Altitude:</label>
         <div class="input-group">
           <input type="number" name="trek_altitude" class="form-control" value="<?php if(isset($_POST['submit'])){ echo $_POST['trek_altitude']; } ?>">
           <div class="input-group-append">
