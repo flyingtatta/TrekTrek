@@ -105,9 +105,9 @@ if (isset($_POST['submit'])) {
 
       <?php endif; ?>
 
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+      <form class="form-inline my-2 my-lg-0" action="./index.php" method="post">
+        <input type="text" name="search_tags" class="form-control mr-sm-2" placeholder="Search">
+        <input type="submit" name="search" class="form-control btn btn-outline-light my-2 my-sm-0" value="Search">
       </form>
 
     </div>
