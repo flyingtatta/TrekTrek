@@ -1,5 +1,21 @@
 <?php
 
+function deleteComment($comment_id, $trek_id){
+  global $connection;
+
+  $query = mysqli_query($connection, "DELETE FROM comments WHERE comment_id = $comment_id");
+  confirmQuery($query);
+  header("Location: ./trek.php?trek_id=$trek_id");
+}
+
+function insertIntoComment($user_id, $trek_id, $comment_content){
+  global $connection;
+
+  $query = mysqli_query($connection, "INSERT INTO comments(user_id, trek_id, comment_content, comment_date) VALUES($user_id, $trek_id, '$comment_content', now())");
+  confirmQuery($query);
+  header("Location: ./trek.php?trek_id=$trek_id");
+}
+
 function trekTypeNameDisplay($trek_type_id){
   global $connection;
 
