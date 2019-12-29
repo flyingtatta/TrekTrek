@@ -25,11 +25,16 @@ if (isset($_GET['type'])) {
   $query = "SELECT * FROM treks WHERE trek_type_id = '$type'";
   $select_all_treks = mysqli_query($connection, $query);
   confirmQuery($select_all_treks);
+}else if (isset($_POST['search'])) {
+  $search_tags = $_POST['search_tags'];
+  $query = "SELECT * FROM treks WHERE trek_tags LIKE '%$search_tags%' OR trek_name LIKE '%$search_tags%' OR trek_location LIKE '%$search_tags%'";
+  $select_all_treks = mysqli_query($connection, $query);
+  confirmQuery($select_all_treks);
 }
 
-
-
 ?>
+
+
 
 
 <main class="mx-3">
