@@ -26,7 +26,7 @@
       <div class="row mt-3">
         <div class="col-8 col-sm-12 col-md-8">
           <form class="" action="" method="post">
-            <textarea name="comment_content" rows="3" cols="50" id="body" class="form-control" placeholder="Your comments..." required></textarea>
+            <textarea name="comment_content" rows="3" cols="50" id="body" class="form-control" placeholder="Your comments..." required></textarea>            
             <input type="submit" name="post_comment" value="Post" class="form-control btn btn-success mt-1">
           </form>
         </div>
@@ -79,7 +79,7 @@
                         </form>
                       <?php endif; ?>
                     <?php endif; ?>
-                    
+
                   </span>
                 </div>
 

@@ -41,6 +41,7 @@ if (!isset($_POST['search'])) {
     <th class="text-center">Views</th>
   </thead>
   <tbody>
+
     <?php
     while ($row = mysqli_fetch_assoc($select_treks)) {
       $trek_id        = $row['trek_id'];
@@ -125,7 +126,7 @@ if (!isset($_POST['search'])) {
           <?php if ($trek_views >= 50): ?>
           <?php echo "#28a745"; ?>
           <?php endif; ?>
-          ; font-size: 0.9rem;">        
+          ; font-size: 0.9rem;">
             <?php echo $trek_views; ?>
           </span>
         </td>
