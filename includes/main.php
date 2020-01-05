@@ -1,35 +1,21 @@
 
 <?php
 if (!isset($_SESSION['user_role'])) {
-  $query = "SELECT * FROM treks WHERE trek_status = 'On'";
-  $select_all_treks = mysqli_query($connection, $query);
-  confirmQuery($select_all_treks);
+  $query = selectTreks('On');
 }else {
-  if ($_SESSION['user_role'] == 'Organizer') {
-    $query = "SELECT * FROM treks";
-    $select_all_treks = mysqli_query($connection, $query);
-    confirmQuery($select_all_treks);
+  if ($_SESSION['user_role'] == 'Organizer' OR $_SESSION['user_role'] == 'Admin') {
+    $query = selectTreks(null, null);
   }else if ($_SESSION['user_role'] == 'User') {
-    $query = "SELECT * FROM treks WHERE trek_status = 'On'";
-    $select_all_treks = mysqli_query($connection, $query);
-    confirmQuery($select_all_treks);
-  }else if ($_SESSION['user_role'] == 'Admin') {
-    $query = "SELECT * FROM treks";
-    $select_all_treks = mysqli_query($connection, $query);
-    confirmQuery($select_all_treks);
+    $query = selectTreks('trek_status', 'On');
   }
 }
 
 if (isset($_GET['type'])) {
   $type = $_GET['type'];
-  $query = "SELECT * FROM treks WHERE trek_type_id = '$type'";
-  $select_all_treks = mysqli_query($connection, $query);
-  confirmQuery($select_all_treks);
+  $query = selectTrekOfType($type, 'On');
 }else if (isset($_POST['search'])) {
   $search_tags = $_POST['search_tags'];
-  $query = "SELECT * FROM treks WHERE trek_tags LIKE '%$search_tags%' OR trek_name LIKE '%$search_tags%' OR trek_location LIKE '%$search_tags%'";
-  $select_all_treks = mysqli_query($connection, $query);
-  confirmQuery($select_all_treks);
+  $query = searchTrek($search_tags);
 }
 
 ?>
@@ -40,7 +26,7 @@ if (isset($_GET['type'])) {
 <main class="mx-3">
   <div class="row">
     <?php
-    while ($row = mysqli_fetch_assoc($select_all_treks)) {
+    while ($row = mysqli_fetch_assoc($query)) {
       $trek_id        = $row['trek_id'];
       $trek_name      = $row['trek_name'];
       $trek_departure = date("d-m-Y", strtotime($row['trek_departure']));
@@ -56,15 +42,15 @@ if (isset($_GET['type'])) {
       $trek_status    = $row['trek_status'];
       ?>
       <div class="col-12 col-md-4">
-        <div class="card" style="width: auto;">
+        <div class="card card-border" style="width: auto;">
           <img src="organizer/trek-images/<?php echo $trek_image; ?>" class="card-img-top" style="height: 290px;">
-          <div class="card-body">
+          <div class="card-body card-border">
             <h5 class="card-title">
               <?php echo $trek_name; ?>
             </h5>
             <ul class="list-group list-group-flush" style="background-color: none;">
-              <li class="list-group-item">Price : &#8377;<?php echo $trek_price; ?></li>
-              <li class="list-group-item">
+              <li class="list-group-item list-gradient">Price : &#8377;<?php echo $trek_price; ?></li>
+              <li class="list-group-item list-gradient">
                 Days  :
                 <?php
                 echo $trek_duration;
@@ -75,16 +61,12 @@ if (isset($_GET['type'])) {
                 }
                 ?>
               </li>
-              <li class="list-group-item">Altitude : <?php echo $trek_altitude; ?></li>
+              <li class="list-group-item list-gradient">Altitude : <?php echo $trek_altitude; ?></li>
             </ul>
             <br>
 
-            <!-- <a data-toggle="modal" href="<?php echo "#".$trek_name.$trek_id; ?>" class="btn btn-primary">
-              Know More!
-            </a> -->
-
             <?php
-            $trek_name_trim = str_replace(" ", "$trek_id", $trek_name);
+              $trek_name_trim = str_replace(" ", "$trek_id", $trek_name);
             ?>
             <div class="d-flex justify-content-between">
               <a href="<?php echo "#".$trek_name_trim.$trek_id; ?>" data-toggle="modal" class="btn btn-primary">

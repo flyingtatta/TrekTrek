@@ -112,6 +112,43 @@ function emailExists($user_email){
   return false;
 }
 
+
+//SELECT QUERIES
+function selectTreks($status){
+  global $connection;
+
+  if (empty($status)) {
+    $query = mysqli_query($connection, "SELECT * FROM treks");
+    confirmQuery($query);
+  }else{
+    $query = mysqli_query($connection, "SELECT * FROM treks WHERE trek_status = '$status'");
+    confirmQuery($query);
+  }
+
+  return $query;
+}
+
+
+function selectTrekOfType($type,$status){
+  global $connection;
+
+  $query = mysqli_query($connection, "SELECT * FROM treks WHERE trek_type_id = '$type' AND trek_status = '$status'");
+  confirmQuery($query);
+
+  return $query;
+}
+
+function searchTrek($search_tags){
+  global $connection;
+
+  $query = mysqli_query($connection, "SELECT * FROM treks WHERE trek_tags LIKE '%$search_tags%' OR trek_name LIKE '%$search_tags%' OR trek_location LIKE '%$search_tags%'");
+  confirmQuery($query);
+
+  return $query;
+}
+
+
+
 function registerUser($user_firstname, $user_lastname, $username, $user_email, $user_phonenumber, $user_image, $tmp_user_image, $user_dob, $user_password){
   global $connection;
 
