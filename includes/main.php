@@ -11,11 +11,9 @@ if (!isset($_SESSION['user_role'])) {
 }
 
 if (isset($_GET['type'])) {
-  $type = $_GET['type'];
-  $query = selectTrekOfType($type, 'On');
-}else if (isset($_POST['search'])) {
-  $search_tags = $_POST['search_tags'];
-  $query = searchTrek($search_tags);
+  $query = selectTrekOfType($_GET['type'], 'On');
+}else if (isset($_POST['search'])) {  
+  $query = searchTrek($_POST['search_tags']);
 }
 
 ?>

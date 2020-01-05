@@ -1,5 +1,5 @@
 <div class="my-3 mx-3">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded rounded-lg">
+  <nav class="navbar navbar-expand-lg navbar-dark rounded rounded-lg nav-bg">
     <a class="navbar-brand">TrekTrek</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -40,7 +40,11 @@
         <ul class="nav nav-pills mr-2">
           <li class="nav-item dropdown active">
             <a class="nav-link text-light text-decoration-none dropdown-toggle" href='' id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img src="../images/<?php echo $_SESSION['user_image']; ?>" width="35" height="35" style="border-radius:50%;">
+              <?php if (empty($_SESSION['user_image'])): ?>
+                <img src="../images/default-profile.png" width="35" height="35" style="border-radius:50%;">
+              <?php else: ?>
+                <img src="../images/<?php echo $_SESSION['user_image']; ?>" width="35" height="35" style="border-radius:50%;">
+              <?php endif; ?>
               <?php echo $_SESSION['user_firstname'] . ". " . $_SESSION['user_lastname']; ?>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">

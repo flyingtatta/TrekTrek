@@ -93,7 +93,11 @@ if (isset($_POST['submit'])) {
         <ul class="nav nav-pills mr-2">
           <li class="nav-item dropdown active">
             <a class="nav-link text-light text-decoration-none dropdown-toggle" href='' id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img src="./images/<?php echo $_SESSION['user_image']; ?>" width="35" height="35" style="border-radius:50%;">
+              <?php if (empty($_SESSION['user_image'])): ?>              
+                <img src="./images/default-profile.png" width="35" height="35" style="border-radius:50%;">
+              <?php else: ?>
+                <img src="./images/<?php echo $_SESSION['user_image']; ?>" width="35" height="35" style="border-radius:50%;">
+              <?php endif; ?>
               <?php echo $_SESSION['user_firstname'] . ". " . $_SESSION['user_lastname']; ?>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -106,7 +110,7 @@ if (isset($_POST['submit'])) {
       <?php endif; ?>
 
       <form class="form-inline my-2 my-lg-0" action="./index.php" method="post">
-        <input type="text" name="search_tags" class="form-control mr-sm-2" placeholder="Search">
+        <input type="search" aria-label="search" name="search_tags" class="form-control mr-sm-2" placeholder="Search" value="<?php if (isset($_POST['search'])){ echo $_POST['search_tags']; } ?>">
         <input type="submit" name="search" class="form-control btn btn-outline-light my-2 my-sm-0" value="Search">
       </form>
 

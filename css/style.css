@@ -9,7 +9,7 @@
 }
 
 .list-gradient{
-  border-image: linear-gradient(to right, #fdfc47, #24fe41);
+  border-image: linear-gradient(to right, #24fe41, #fdfc47);
   border-image-slice: 1;
   border-width: 1px;
 }
