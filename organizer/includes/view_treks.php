@@ -92,7 +92,7 @@ if (!isset($_POST['search'])) {
         <td class="text-left"><?php echo $trek_about; ?></td>
         <td class="text-center" ><?php echo $trek_location; ?></td>
         <td class="text-center" ><?php echo $trek_duration; ?></td>
-        <td class="text-center" ><img src="trek-images/<?php echo $trek_image; ?>" width="200" height="100"></td>
+        <td class="text-center" ><img src="trek-images/<?php echo $trek_image; ?>" class="img-fluid rounded rounded-lg"></td>
         <td class="text-center" ><?php echo $trek_type_name; ?></td>
         <td class="text-center" ><?php echo $trek_altitude; ?></td>
         <td class="text-center" >&#8377;<?php echo $trek_price; ?></td>
