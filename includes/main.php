@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_role'])) {
 
 if (isset($_GET['type'])) {
   $query = selectTrekOfType($_GET['type'], 'On');
-}else if (isset($_POST['search'])) {  
+}else if (isset($_POST['search'])) {
   $query = searchTrek($_POST['search_tags']);
 }
 
@@ -47,8 +47,8 @@ if (isset($_GET['type'])) {
               <?php echo $trek_name; ?>
             </h5>
             <ul class="list-group list-group-flush" style="background-color: none;">
-              <li class="list-group-item list-gradient">Price : &#8377;<?php echo $trek_price; ?></li>
-              <li class="list-group-item list-gradient">
+              <li class="list-group-item list-gradient" style="text-decoration: none;">Price : &#8377;<?php echo $trek_price; ?></li>
+              <li class="list-group-item list-gradient" style="text-decoration: none;">
                 Days  :
                 <?php
                 echo $trek_duration;
@@ -59,7 +59,7 @@ if (isset($_GET['type'])) {
                 }
                 ?>
               </li>
-              <li class="list-group-item list-gradient">Altitude : <?php echo $trek_altitude; ?></li>
+              <li class="list-group-item list-gradient" style="text-decoration: none;">Altitude : <?php echo $trek_altitude; ?></li>
             </ul>
             <br>
 

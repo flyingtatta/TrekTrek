@@ -214,10 +214,10 @@ function updateUser($user_id, $user_firstname, $user_lastname, $username, $user_
 }
 
 
-function loginUser($user_email, $user_password){
+function loginUser($user_data, $user_password){
   global $connection;
 
-  $query = "SELECT * FROM users WHERE user_email = '{$user_email}'";
+  $query = "SELECT * FROM users WHERE user_email = '{$user_data}' OR username = '{$user_data}'";
   $login_user = mysqli_query($connection, $query);
 
   while($row = mysqli_fetch_assoc($login_user)){

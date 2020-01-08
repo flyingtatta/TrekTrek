@@ -8,6 +8,8 @@
    border-width: 1px;
 }
 
+
+
 .list-gradient{
   border-image: linear-gradient(to right, #24fe41, #fdfc47);
   border-image-slice: 1;

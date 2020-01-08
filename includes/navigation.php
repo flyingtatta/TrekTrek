@@ -1,8 +1,8 @@
 <?php
 if (isset($_POST['submit'])) {
-  $user_email    = $_POST['user_email'];
+  $user_data    = $_POST['user_data'];
   $user_password = $_POST['user_password'];
-  loginUser($user_email, $user_password);
+  loginUser($user_data, $user_password);
 }
 ?>
 <div class="my-3 mx-3">
@@ -83,9 +83,9 @@ if (isset($_POST['submit'])) {
       <?php if (isLoggedout()): ?>
 
         <form class="form-inline" action="" method="post">
-          <input class="form-control mr-2" type="text"     placeholder="Email"    name="user_email" >
+          <input class="form-control mr-2" type="text"     placeholder="Email/Username"    name="user_data" >
           <input class="form-control mr-2" type="password" placeholder="Password" name="user_password" >
-          <input class="form-control mr-2 btn btn-success" type="submit" name="submit" value="Login">
+          <input class="form-control mr-2 btn btn-primary border-white" type="submit" name="submit" value="Login">
         </form>
 
       <?php else: ?>
@@ -93,7 +93,7 @@ if (isset($_POST['submit'])) {
         <ul class="nav nav-pills mr-2">
           <li class="nav-item dropdown active">
             <a class="nav-link text-light text-decoration-none dropdown-toggle" href='' id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <?php if (empty($_SESSION['user_image'])): ?>              
+              <?php if (empty($_SESSION['user_image'])): ?>
                 <img src="./images/default-profile.png" width="35" height="35" style="border-radius:50%;">
               <?php else: ?>
                 <img src="./images/<?php echo $_SESSION['user_image']; ?>" width="35" height="35" style="border-radius:50%;">
