@@ -136,7 +136,7 @@
     </div>
 
     <div class="row">
-      <div class="col-12 col-sm-12 form-group">
+      <div class="col-12 col-md-4 form-group">
         <label for="">Phone Number</label>
         <input type="number" name="user_phonenumber" class="form-control"
         value="<?php if(isset($_POST['register'])){ echo $user_phonenumber; } ?>">
@@ -148,14 +148,14 @@
           ?>
         </p>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="col-12 col-sm-6 form-group">
+      <div class="col-12 col-md-4 form-group">
         <label for="">Profile Pic</label><br>
         <input type="file" name="image">
       </div>
-      <div class="col-12 col-sm-6 form-group">
+
+
+      <div class="col-12 col-md-4 form-group">
         <label for="">Date-of-Birth</label>
         <input type="date" name="user_dob" class="form-control"
         value="<?php if(isset($_POST['register'])){ echo $user_dob; } ?>">
@@ -167,6 +167,10 @@
           ?>
         </p>
       </div>
+    </div>
+
+    <div class="row">
+
     </div>
 
     <div class="row">
