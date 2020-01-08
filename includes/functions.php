@@ -16,15 +16,6 @@ function insertIntoComment($user_id, $trek_id, $comment_content){
   header("Location: ./trek.php?trek_id=$trek_id");
 }
 
-function trekTypeNameDisplay($trek_type_id){
-  global $connection;
-
-  $query = mysqli_query($connection, "SELECT * FROM trek_type WHERE trek_type_id = $trek_type_id");
-  confirmQuery($query);
-  $row = mysqli_fetch_assoc($query);
-  echo $row['trek_type_name'];
-}
-
 function isLoggedout(){
   global $connection;
 
@@ -114,11 +105,27 @@ function emailExists($user_email){
 
 
 //SELECT QUERIES
+function trekTypeNameDisplay($trek_type_id){
+  global $connection;
+
+  $query = mysqli_query($connection, "SELECT * FROM trek_type WHERE trek_type_id = $trek_type_id");
+  confirmQuery($query);
+  $row = mysqli_fetch_assoc($query);
+  echo $row['trek_type_name'];
+}
+
 function selectTreks($status){
   global $connection;
 
   if (empty($status)) {
-    $query = mysqli_query($connection, "SELECT * FROM treks");
+    $stmt  = "SELECT treks.trek_id,treks.trek_type_id,treks.trek_organizer_id, ";
+    $stmt .= "trek_type.trek_type_name,";
+    $stmt .= "treks.trek_name,treks.trek_departure,treks.trek_arrival,treks.trek_about,";
+    $stmt .= "treks.trek_location,treks.trek_duration,treks.trek_image,treks.trek_views,";
+    $stmt .= "treks.trek_altitude,treks.trek_price,treks.trek_status ";
+    $stmt .= "FROM treks ";
+    $stmt .= "INNER JOIN trek_type ON treks.trek_type_id = trek_type.trek_type_id ";
+    $query = mysqli_query($connection, $stmt);
     confirmQuery($query);
   }else{
     $query = mysqli_query($connection, "SELECT * FROM treks WHERE trek_status = '$status'");
