@@ -6,7 +6,15 @@
 <?php
 if (!isset($_POST['search'])) {
   $user_id = $_SESSION['user_id'];
-  $query = "SELECT * FROM treks WHERE trek_organizer_id = '$user_id' ORDER BY trek_id DESC";
+  $query  = "SELECT treks.trek_id,treks.trek_type_id,treks.trek_organizer_id, ";
+  $query .= "trek_type.trek_type_name,";
+  $query .= "treks.trek_name,treks.trek_departure,treks.trek_arrival,treks.trek_about,";
+  $query .= "treks.trek_location,treks.trek_duration,treks.trek_image,treks.trek_views,";
+  $query .= "treks.trek_altitude,treks.trek_price,treks.trek_status ";
+  $query .= "FROM treks ";
+  $query .= "INNER JOIN trek_type ON treks.trek_type_id = trek_type.trek_type_id ";
+  $query .= "WHERE trek_organizer_id = '$user_id' ORDER BY trek_id DESC";
+
   $select_treks = mysqli_query($connection, $query);
   confirmQuery($query);
 }else if(isset($_POST['search'])){
@@ -54,6 +62,7 @@ if (!isset($_POST['search'])) {
       $trek_duration  = $row['trek_duration'];
       $trek_image     = $row['trek_image'];
       $trek_type_id   = $row['trek_type_id'];
+      $trek_type_name = $row['trek_type_name'];
       $trek_altitude  = $row['trek_altitude'];
       $trek_price     = $row['trek_price'];
       $trek_status    = $row['trek_status'];
@@ -65,10 +74,6 @@ if (!isset($_POST['search'])) {
             <input type="hidden" name="trek_id" value="<?php echo $trek_id; ?>">
             <input type="submit" name="delete" value="Delete" class="btn btn-danger">
           </form>
-
-          <!-- <a href="treks.php?delete=<?php echo $trek_id; ?>">
-            <i class="fa fa-trash text-danger fa-lg"></i>
-          </a> -->
         </td>
         <td class="text-center">
           <a href="./treks.php?source=edit_treks&trek_id=<?php echo $trek_id; ?>">
@@ -88,11 +93,7 @@ if (!isset($_POST['search'])) {
         <td class="text-center" ><?php echo $trek_location; ?></td>
         <td class="text-center" ><?php echo $trek_duration; ?></td>
         <td class="text-center" ><img src="trek-images/<?php echo $trek_image; ?>" width="200" height="100"></td>
-        <td class="text-center" >
-          <?php
-            trekTypeNameDisplay($trek_type_id);
-          ?>
-        </td>
+        <td class="text-center" ><?php echo $trek_type_name; ?></td>
         <td class="text-center" ><?php echo $trek_altitude; ?></td>
         <td class="text-center" >&#8377;<?php echo $trek_price; ?></td>
         <td class="text-center">

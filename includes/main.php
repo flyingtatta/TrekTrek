@@ -18,9 +18,6 @@ if (isset($_GET['type'])) {
 
 ?>
 
-
-
-
 <main class="mx-3">
   <div class="row">
     <?php
@@ -64,7 +61,7 @@ if (isset($_GET['type'])) {
             <br>
 
             <?php
-              $trek_name_trim = str_replace(" ", "$trek_id", $trek_name);
+            $trek_name_trim = str_replace(" ", "$trek_id", $trek_name);
             ?>
             <div class="d-flex justify-content-between">
               <a href="<?php echo "#".$trek_name_trim.$trek_id; ?>" data-toggle="modal" class="btn btn-primary">
@@ -75,18 +72,7 @@ if (isset($_GET['type'])) {
                 Full Details
               </a>
             </div>
-
           </div>
-
-
-          <!-- Button trigger modal -->
-          <!-- <?php
-          // if (isset($_POST['knowmore'])) {
-          //   $query = "UPDATE treks SET trek_views = trek_views+1 WHERE trek_id = $trek_id";
-          //   $views_query = mysqli_query($connection, $query);
-          //   confirmQuery($views_query);
-          // }
-          ?> -->
 
           <!-- Modal -->
           <div class="modal fade" id="<?php echo $trek_name_trim.$trek_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">

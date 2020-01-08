@@ -82,7 +82,15 @@ if (isset($_GET['trek_id'])) {
 
   <form class="" action="" method="post" enctype="multipart/form-data">
     <?php
-    $query = "SELECT * FROM treks WHERE trek_id = $trek_id";
+    $query = "SELECT treks.trek_id,treks.trek_type_id,treks.trek_organizer_id, ";
+    $query .= "trek_type.trek_type_name,";
+    $query .= "treks.trek_name,treks.trek_departure,treks.trek_arrival,treks.trek_about,";
+    $query .= "treks.trek_location,treks.trek_duration,treks.trek_image,treks.trek_views,";
+    $query .= "treks.trek_altitude,treks.trek_price,treks.trek_status ";
+    $query .= "FROM treks ";
+    $query .= "INNER JOIN trek_type ON treks.trek_type_id = trek_type.trek_type_id ";
+    $query .= "WHERE trek_id = $trek_id";
+
     $select_trek = mysqli_query($connection, $query);
     confirmQuery($select_trek);
     while($row = mysqli_fetch_assoc($select_trek)){
@@ -94,6 +102,7 @@ if (isset($_GET['trek_id'])) {
       $trek_duration  = $row['trek_duration'];
       $trek_image     = $row['trek_image'];
       $trek_type_id   = $row['trek_type_id'];
+      $trek_type_name = $row['trek_type_name'];
       $trek_altitude  = $row['trek_altitude'];
       $trek_altitude  = str_replace("ft", "", $trek_altitude);
       $trek_altitude  = str_replace("m", "", $trek_altitude);
@@ -208,29 +217,20 @@ if (isset($_GET['trek_id'])) {
         <label for="">Type of Trek:</label>
         <select class="form-control" name="trek_type_id">
 
-          <?php
-          $query = mysqli_query($connection, "SELECT * FROM trek_type WHERE trek_type_id = $trek_type_id");
-          confirmQuery($query);
-          $row = mysqli_fetch_assoc($query);
-          $trek_type_name = $row['trek_type_name'];
-          ?>
-
           <option value="<?php echo $trek_type_id; ?>" selected><?php echo $trek_type_name; ?></option>
 
           <?php
-          $query = mysqli_query($connection, "SELECT * FROM trek_type");
-          confirmQuery($query);
-
-          while($row = mysqli_fetch_assoc($query)){
-            $trek_type_id = $row['trek_type_id'];
-            $trek_type_name = $row['trek_type_name'];
+            $query = mysqli_query($connection, "SELECT * FROM trek_type WHERE trek_type_id != $trek_type_id");
+            confirmQuery($query);
+            while ($row = mysqli_fetch_assoc($query)) {
+              $trek_type_id   = $row['trek_type_id'];
+              $trek_type_name = $row['trek_type_name'];
+          ?>
+            <option value="<?php echo $trek_type_id; ?>"><?php echo $trek_type_name; ?></option>
+          <?php
+            }
             ?>
 
-            <option value="<?php echo $trek_type_id; ?>"><?php echo $trek_type_name; ?></option>
-
-            <?php
-          }
-          ?>
         </select>
       </div>
 
