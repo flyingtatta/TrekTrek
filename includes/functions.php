@@ -66,6 +66,13 @@ function recordCountFor($table_name, $where_clause,$condition){
   return $count;
 }
 
+function viewsCount($trek_id){
+  global $connection;
+
+  $query = mysqli_query($connection, "SELECT * FROM views WHERE trek_id=$trek_id");
+  confirmQuery($query);
+  return mysqli_num_rows($query);
+}
 
 function escape($string){
   global $connection;
@@ -114,27 +121,30 @@ function trekTypeNameDisplay($trek_type_id){
   echo $row['trek_type_name'];
 }
 
-function selectTreks($status){
+function selectTreksForSoop(){
   global $connection;
 
-  if (empty($status)) {
-    $stmt  = "SELECT treks.trek_id,treks.trek_type_id,treks.trek_organizer_id, ";
-    $stmt .= "trek_type.trek_type_name,";
-    $stmt .= "treks.trek_name,treks.trek_departure,treks.trek_arrival,treks.trek_about,";
-    $stmt .= "treks.trek_location,treks.trek_duration,treks.trek_image,treks.trek_views,";
-    $stmt .= "treks.trek_altitude,treks.trek_price,treks.trek_status ";
-    $stmt .= "FROM treks ";
-    $stmt .= "INNER JOIN trek_type ON treks.trek_type_id = trek_type.trek_type_id ";
-    $query = mysqli_query($connection, $stmt);
-    confirmQuery($query);
-  }else{
-    $query = mysqli_query($connection, "SELECT * FROM treks WHERE trek_status = '$status'");
-    confirmQuery($query);
-  }
+  $stmt  = "SELECT treks.trek_id,treks.trek_type_id,treks.trek_organizer_id, ";
+  $stmt .= "trek_type.trek_type_name,";
+  $stmt .= "treks.trek_name,treks.trek_departure,treks.trek_arrival,treks.trek_about,";
+  $stmt .= "treks.trek_location,treks.trek_duration,treks.trek_image,treks.trek_views,";
+  $stmt .= "treks.trek_altitude,treks.trek_price,treks.trek_status ";
+  $stmt .= "FROM treks ";
+  $stmt .= "INNER JOIN trek_type ON treks.trek_type_id = trek_type.trek_type_id ";
+  $query = mysqli_query($connection, $stmt);
+  confirmQuery($query);
 
   return $query;
 }
 
+function selectTreksWithStatusOn(){
+  global $connection;
+
+  $query = mysqli_query($connection, "SELECT * FROM treks WHERE trek_status = 'On'");
+  confirmQuery($query);
+
+  return $query;
+}
 
 function selectTrekOfType($type,$status){
   global $connection;
@@ -148,7 +158,7 @@ function selectTrekOfType($type,$status){
 function searchTrek($search_tags){
   global $connection;
 
-  $query = mysqli_query($connection, "SELECT * FROM treks WHERE trek_tags LIKE '%$search_tags%' OR trek_name LIKE '%$search_tags%' OR trek_location LIKE '%$search_tags%'");
+  $query = mysqli_query($connection, "SELECT * FROM treks WHERE trek_tags LIKE '%$search_tags%' AND trek_status='On' OR trek_name LIKE '%$search_tags%' AND trek_status='On' OR trek_location LIKE '%$search_tags%' AND trek_status='On'");
   confirmQuery($query);
 
   return $query;

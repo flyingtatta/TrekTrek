@@ -1,12 +1,12 @@
 
 <?php
 if (!isset($_SESSION['user_role'])) {
-  $query = selectTreks('On');
+  $query = $query = selectTreksWithStatusOn();
 }else {
   if ($_SESSION['user_role'] == 'Organizer' OR $_SESSION['user_role'] == 'Admin') {
-    $query = selectTreks(null, null);
+    $query = selectTreksForSoop();
   }else if ($_SESSION['user_role'] == 'User') {
-    $query = selectTreks('trek_status', 'On');
+    $query = selectTreksWithStatusOn();
   }
 }
 
@@ -32,7 +32,6 @@ if (isset($_GET['type'])) {
       $trek_duration  = $row['trek_duration'];
       $trek_image     = $row['trek_image'];
       $trek_type_id   = $row['trek_type_id'];
-      $trek_views     = $row['trek_views'];
       $trek_altitude  = $row['trek_altitude'];
       $trek_price     = $row['trek_price'];
       $trek_status    = $row['trek_status'];
@@ -138,9 +137,8 @@ if (isset($_GET['type'])) {
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Views
-                      <span class="badge badge-primary badge-pill"><?php echo $trek_views; ?></span>
+                      <span class="badge badge-primary badge-pill"><?php echo viewsCount($trek_id); ?></span>
                     </li>
-
                   </ul>
 
                 </div>

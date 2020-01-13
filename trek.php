@@ -9,8 +9,14 @@ if (isset($_GET['trek_id'])) {
   $trek_id = $_GET['trek_id'];
 
   if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'User') {
-    $query = mysqli_query($connection,"UPDATE treks SET trek_views = trek_views+1 WHERE trek_id = $trek_id");
-    confirmQuery($query);
+    $user_id = $_SESSION['user_id'];
+
+    $stmt = mysqli_query($connection, "SELECT * FROM views WHERE user_id=$user_id AND trek_id=$trek_id");
+    confirmQuery($stmt);
+    if (mysqli_num_rows($stmt) <= 0) {
+      $query = mysqli_query($connection,"INSERT INTO views(user_id, trek_id) VALUES($user_id, $trek_id)");
+      confirmQuery($query);
+    }
   }
 
   $query = "SELECT treks.trek_id,treks.trek_type_id,treks.trek_organizer_id, ";
@@ -18,7 +24,7 @@ if (isset($_GET['trek_id'])) {
   $query .= "trek_type.trek_type_name,";
 
   $query .= "treks.trek_name,treks.trek_departure,treks.trek_arrival,treks.trek_about,";
-  $query .= "treks.trek_location,treks.trek_duration,treks.trek_image,treks.trek_views,";
+  $query .= "treks.trek_location,treks.trek_duration,treks.trek_image,";
   $query .= "treks.trek_altitude,treks.trek_price,treks.trek_status ";
 
   $query .= "FROM treks ";
@@ -40,7 +46,6 @@ if (isset($_GET['trek_id'])) {
     $trek_duration     = $row['trek_duration'];
     $trek_image        = $row['trek_image'];
     $trek_type_id      = $row['trek_type_id'];
-    $trek_views        = $row['trek_views'];
     $trek_altitude     = $row['trek_altitude'];
     $trek_price        = $row['trek_price'];
     $trek_status       = $row['trek_status'];
@@ -85,9 +90,9 @@ if (isset($_GET['trek_id'])) {
         <img src="organizer/trek-images/<?php echo $trek_image; ?>" class="img-fluid rounded rounded-lg">
       </div>
 
-      <div class="col-12 col-md-6 text-left align-self-center">
-        <p class="lead m-0" style="font-size: 1.5rem;">
+      <div class="col-12 col-md-6 mt-sm-3 text-left align-self-start">
 
+        <p class="lead m-0" style="font-size: 1.5rem;">
 
           <span style="font-size: 2rem; font-weight: 300;" class="d-flex justify-content-center">
             <img src="images/<?php echo $user_image; ?>" class="img-fluid rounded rounded-lg" style="height: 45px;">
@@ -96,39 +101,51 @@ if (isset($_GET['trek_id'])) {
             </span>
             :
             <?php echo $user_phonenumber; ?>
-
           </span>
-
           <br>
 
           <span style="font-size: 2rem; font-weight: 400;">Altitude : </span>
           <?php echo $trek_altitude; ?>
-
           <br>
 
           <span style="font-size: 2rem; font-weight: 400;">Cost : </span>
           &#8377;<?php echo $trek_price; ?>
-
           <br>
 
           <span style="font-size: 2rem; font-weight: 400;">Location : </span>
           <?php echo $trek_location; ?>
-
           <br>
 
           <span style="font-size: 2rem; font-weight: 400;">Type : </span>
-          <?php
-          // trekTypeNameDisplay($trek_type_id);
-          echo $trek_type_name;
-          ?>
-
+          <?php echo $trek_type_name; ?>
           <br>
 
 
           <span style="font-size: 2rem; font-weight: 400;">Views:</span>
-          <?php echo $trek_views; ?>
-
+          <?php
+            echo viewsCount($trek_id);
+          ?>
           <br>
+
+
+          <form class="text-center" action="" method="post">
+            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+            <input type="hidden" name="trek_id" value="<?php echo $trek_id; ?>">
+            <?php
+              $user_id = $_SESSION['user_id'];
+              $query = mysqli_query($connection, "SELECT * FROM interested WHERE trek_id = $trek_id");
+              $user_like = mysqli_query($connection, "SELECT * FROM interested where user_id = $user_id AND trek_id = $trek_id");
+            ?>
+            <input type="submit" name="interested" value="<?php echo mysqli_num_rows($query); ?> Interested"
+            class="lead" style="background: transparent; border:none; font-size: 1.7rem;
+            <?php if (mysqli_num_rows($user_like) > 0): ?>
+              <?php echo 'color:#1ed761;'; ?>
+            <?php endif; ?>"
+            <?php if (mysqli_num_rows($user_like) > 0): ?>
+              <?php echo "disabled"; ?>
+            <?php endif; ?>
+            >
+          </form>
         </p>
 
       </div>
@@ -140,12 +157,21 @@ if (isset($_GET['trek_id'])) {
 
 
 
-  <?php
+<?php
 }else{
   header("Location: ./index.php");
 }
-?>
+
+if (isset($_POST['interested'])) {
+  $user_id = $_POST['user_id'];
+  $trek_id = $_POST['trek_id'];
+
+  $stmt = mysqli_prepare($connection, "INSERT INTO interested(user_id, trek_id) VALUES(?,?)");
+  mysqli_stmt_bind_param($stmt, 'ii', $user_id, $trek_id);
+  mysqli_stmt_execute($stmt);
+
+  header("Location: ./trek.php?trek_id=$trek_id");
+}
 
 
-
-<?php include 'includes/footer.php'; ?>
+include 'includes/footer.php'; ?>

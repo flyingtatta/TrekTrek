@@ -9,7 +9,7 @@ if (!isset($_POST['search'])) {
   $query  = "SELECT treks.trek_id,treks.trek_type_id,treks.trek_organizer_id, ";
   $query .= "trek_type.trek_type_name,";
   $query .= "treks.trek_name,treks.trek_departure,treks.trek_arrival,treks.trek_about,";
-  $query .= "treks.trek_location,treks.trek_duration,treks.trek_image,treks.trek_views,";
+  $query .= "treks.trek_location,treks.trek_duration,treks.trek_image,";
   $query .= "treks.trek_altitude,treks.trek_price,treks.trek_status ";
   $query .= "FROM treks ";
   $query .= "INNER JOIN trek_type ON treks.trek_type_id = trek_type.trek_type_id ";
@@ -66,7 +66,7 @@ if (!isset($_POST['search'])) {
       $trek_altitude  = $row['trek_altitude'];
       $trek_price     = $row['trek_price'];
       $trek_status    = $row['trek_status'];
-      $trek_views     = $row['trek_views']; ?>
+      ?>
 
       <tr>
         <td class="text-center">
@@ -115,6 +115,7 @@ if (!isset($_POST['search'])) {
         </td>
 
         <td class="text-center">
+          <?php $trek_views = viewsCount($trek_id); ?>
           <span class="badge badge-primary badge-pill" style="background-color:
           <?php if ($trek_views >= 0 && $trek_views < 25): ?>
           <?php echo "#dc3545";?>
@@ -128,7 +129,7 @@ if (!isset($_POST['search'])) {
           <?php echo "#28a745"; ?>
           <?php endif; ?>
           ; font-size: 0.9rem;">
-            <?php echo $trek_views; ?>
+          <?php echo $trek_views; ?>
           </span>
         </td>
       </tr>
