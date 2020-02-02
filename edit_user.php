@@ -20,7 +20,6 @@ if (isset($_GET['user_id'])) {
     $user_dob         = escape($_POST['user_dob']);
     $user_password    = escape($_POST['user_password']);
 
-
     $error = [
       'user_firstname' => '',
       'user_dob' => '',
@@ -65,7 +64,7 @@ if (isset($_GET['user_id'])) {
 
   }
 ?>
-
+<?php // TODO: something ?>
 <h1 class="display-4 text-center mt-3">
   Edit User
 </h1>

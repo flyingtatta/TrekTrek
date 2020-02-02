@@ -19,8 +19,8 @@ if (isset($_GET['type'])) {
 ?>
 
 <main class="mx-3">
-  <div class="card-columns">
-    <!-- <div class="row"> -->
+  <!-- <div class="card-columns"> -->
+    <div class="row">
     <?php
     while ($row = mysqli_fetch_assoc($query)) {
       $trek_id        = $row['trek_id'];
@@ -37,8 +37,8 @@ if (isset($_GET['type'])) {
       $trek_status    = $row['trek_status'];
       ?>
 
-      <!-- <div class="col-12 col-md-4"> -->
-        <div class="card card-border" style="width: auto;">
+      <div class="col-12 col-md-4">
+        <div class="card card-border">
           <img src="organizer/trek-images/<?php echo $trek_image; ?>" class="card-img-top">
           <div class="card-body card-border">
             <h5 class="card-title">
@@ -150,7 +150,7 @@ if (isset($_GET['type'])) {
           </div>
         </div>
         <br>
-      <!-- </div> -->
+      </div>
     <?php } ?>
   </div>
 </main>

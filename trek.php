@@ -127,7 +127,6 @@ if (isset($_GET['trek_id'])) {
           ?>
           <br>
 
-
           <form class="text-center" action="" method="post">
             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
             <input type="hidden" name="trek_id" value="<?php echo $trek_id; ?>">
@@ -136,6 +135,7 @@ if (isset($_GET['trek_id'])) {
               $query = mysqli_query($connection, "SELECT * FROM interested WHERE trek_id = $trek_id");
               $user_like = mysqli_query($connection, "SELECT * FROM interested where user_id = $user_id AND trek_id = $trek_id");
             ?>
+
             <input type="submit" name="interested" value="<?php echo mysqli_num_rows($query); ?> Interested"
             class="lead" style="background: transparent; border:none; font-size: 1.7rem;
             <?php if (mysqli_num_rows($user_like) > 0): ?>
@@ -145,6 +145,8 @@ if (isset($_GET['trek_id'])) {
               <?php echo "disabled"; ?>
             <?php endif; ?>
             >
+
+
           </form>
         </p>
 
