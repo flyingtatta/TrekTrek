@@ -130,21 +130,40 @@ if (isset($_GET['trek_id'])) {
           <form class="text-center" action="" method="post">
             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
             <input type="hidden" name="trek_id" value="<?php echo $trek_id; ?>">
+
             <?php
-              $user_id = $_SESSION['user_id'];
               $query = mysqli_query($connection, "SELECT * FROM interested WHERE trek_id = $trek_id");
-              $user_like = mysqli_query($connection, "SELECT * FROM interested where user_id = $user_id AND trek_id = $trek_id");
+
+              if (isLoggedout()):
             ?>
 
-            <input type="submit" name="interested" value="<?php echo mysqli_num_rows($query); ?> Interested"
-            class="lead" style="background: transparent; border:none; font-size: 1.7rem;
-            <?php if (mysqli_num_rows($user_like) > 0): ?>
-              <?php echo 'color:#1ed761;'; ?>
-            <?php endif; ?>"
-            <?php if (mysqli_num_rows($user_like) > 0): ?>
-              <?php echo "disabled"; ?>
-            <?php endif; ?>
-            >
+            <button type="button" class="btn btn-dark btn-rounded-lg" disabled>
+              <?php echo mysqli_num_rows($query); ?>
+              Interested
+            </button>
+
+            <?php else:
+              $user_id = $_SESSION['user_id'];
+              $user_interest = mysqli_query($connection, "SELECT * FROM interested where user_id = $user_id AND trek_id = $trek_id");
+            ?>
+              <input type="submit" name="interested" value="<?php echo mysqli_num_rows($query); ?> Interested"
+
+              <?php
+                if (mysqli_num_rows($user_interest) < 0 || mysqli_num_rows($query) >= 0):
+                  echo 'class="btn btn-lg btn-primary"';
+                endif;
+              ?>
+              <?php
+                if (mysqli_num_rows($user_interest) > 0):
+                 echo 'class="btn btn-lg btn-success" disabled';
+                endif;
+              ?>
+              >
+            <?php
+              endif;
+            ?>
+
+
 
 
           </form>
