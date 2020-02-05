@@ -57,9 +57,37 @@ if (isset($_GET['trek_id'])) {
 
     $trek_type_name    = $row['trek_type_name'];
   }
+  $interested_num = mysqli_query($connection, "SELECT * FROM interested WHERE trek_id = $trek_id");
+  $comments_num = mysqli_query($connection, "SELECT * FROM comments WHERE trek_id = $trek_id");
   ?>
 
   <div class="mx-3 my-3">
+
+    <ul class="nav nav-pills nav-fill mb-2">
+      <li class="nav-item mr-2" style="border: 1px solid #38ef7d; border-radius: 10px;">
+        <a class="nav-link">Interested
+          <span class="badge badge-primary">
+            <?php echo mysqli_num_rows($interested_num); ?>
+          </span>
+        </a>
+      </li>
+
+      <li class="nav-item mx-5" style="border: 1px solid #38ef7d; border-radius: 10px;">
+        <a class="nav-link">Views
+          <span class="badge badge-primary">
+            <?php echo viewsCount($trek_id); ?>
+          </span>
+        </a>
+      </li>
+      <li class="nav-item ml-2" style="border: 1px solid #38ef7d; border-radius: 10px;">
+        <a class="nav-link">Comments
+          <span class="badge badge-primary">
+            <?php echo mysqli_num_rows($comments_num); ?>
+          </span>
+        </a>
+      </li>
+    </ul>
+
     <div class="row">
       <div class="col-12 col-md-6">
         <h5 class="display-3" style="font-weight: 400;"><?php echo $trek_name; ?></h5>
@@ -121,24 +149,16 @@ if (isset($_GET['trek_id'])) {
           <br>
 
 
-          <span style="font-size: 2rem; font-weight: 400;">Views:</span>
-          <?php
-            echo viewsCount($trek_id);
-          ?>
-          <br>
-
           <form class="text-center" action="" method="post">
             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
             <input type="hidden" name="trek_id" value="<?php echo $trek_id; ?>">
 
             <?php
-              $query = mysqli_query($connection, "SELECT * FROM interested WHERE trek_id = $trek_id");
-
               if (isLoggedout()):
             ?>
 
             <button type="button" class="btn btn-dark btn-rounded-lg" disabled>
-              <?php echo mysqli_num_rows($query); ?>
+              <?php echo mysqli_num_rows($interested_num); ?>
               Interested
             </button>
 
@@ -146,10 +166,10 @@ if (isset($_GET['trek_id'])) {
               $user_id = $_SESSION['user_id'];
               $user_interest = mysqli_query($connection, "SELECT * FROM interested where user_id = $user_id AND trek_id = $trek_id");
             ?>
-              <input type="submit" name="interested" value="<?php echo mysqli_num_rows($query); ?> Interested"
+              <input type="submit" name="interested" value="<?php echo mysqli_num_rows($interested_num); ?> Interested"
 
               <?php
-                if (mysqli_num_rows($user_interest) < 0 || mysqli_num_rows($query) >= 0):
+                if (mysqli_num_rows($user_interest) < 0 || mysqli_num_rows($interested_num) >= 0):
                   echo 'class="btn btn-lg btn-primary"';
                 endif;
               ?>
