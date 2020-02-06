@@ -64,7 +64,6 @@ if (isset($_GET['user_id'])) {
 
   }
 ?>
-<?php // TODO: something ?>
 <h1 class="display-4 text-center mt-3">
   Edit User
 </h1>

@@ -36,6 +36,7 @@ if (isset($_POST['submit'])) {
   if (empty($_POST['trek_departure'])) {
     $error['trek_departure'] = 'Cannot be empty';
   }
+  // TODO: TO CHECK WHETHER THE DATE IS AFTER CURRENT DATE OR NOT
   // if ($_POST['trek_departure'] < strtotime('now')) {
   //   $error['trek_departure'] = "We can't time travel";
   // }
