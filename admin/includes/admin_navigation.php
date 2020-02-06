@@ -9,15 +9,27 @@
       <ul class="navbar-nav mr-auto">
 
         <li class="nav-item">
-          <a class="nav-link" href="../">Home <span class="sr-only">(current)</span></a>
+          <a style="color: white;" class="nav-link" href="../">Home <span class="sr-only">(current)</span></a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link <?php if (!isset($_GET['source'])) { echo "active"; } ?>" href="./">Admin</a>
+          <a
+          <?php if (basename($_SERVER['PHP_SELF']) == 'index.php'): ?>
+            style="color: #24FE41;"
+          <?php else: ?>
+            style="color: white;"
+          <?php endif; ?>
+          class="nav-link" href="./">Admin</a>
         </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle <?php if (isset($_GET['source'])) { echo "active"; } ?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a
+          <?php if (basename($_SERVER['PHP_SELF']) == 'users.php'): ?>
+            style="color: #24FE41;"
+          <?php else: ?>
+            style="color: white;"
+          <?php endif; ?>
+          class="nav-link dropdown-toggle <?php if (isset($_GET['source'])) { echo "active"; } ?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Users
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
