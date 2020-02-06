@@ -36,9 +36,9 @@ if (isset($_POST['submit'])) {
   if (empty($_POST['trek_departure'])) {
     $error['trek_departure'] = 'Cannot be empty';
   }
-  if ($_POST['trek_departure'] < strtotime('now')) {
-    $error['trek_departure'] = "We can't time travel";
-  }
+  // if ($_POST['trek_departure'] < strtotime('now')) {
+  //   $error['trek_departure'] = "We can't time travel";
+  // }
   if (empty($_POST['trek_arrival'])) {
     $error['trek_arrival'] = 'Cannot be empty';
   }
@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
   if (empty($_POST['trek_about'])) {
     $error['trek_about'] = 'Cannot be empty';
   }
-  if (strlen($_POST['trek_about']) < 100) {
+  if (strlen($_POST['trek_about']) < 50) {
     $error['trek_about'] = 'Atleast 30-35 words describing the place';
   }
 
