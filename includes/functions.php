@@ -1,5 +1,12 @@
 <?php
 
+function update_status(){
+  global $connection;
+  $current_date = date('Y-m-d');
+  $query = mysqli_query($connection, "UPDATE treks SET trek_status = 'Off' WHERE '$current_date' > trek_departure");
+  confirmQuery($query);
+}
+
 function deleteComment($comment_id, $trek_id){
   global $connection;
 
@@ -121,6 +128,25 @@ function trekTypeNameDisplay($trek_type_id){
   echo $row['trek_type_name'];
 }
 
+function selectTreksForOrganizer(){
+  global $connection;
+
+  $organizer_id = $_SESSION['user_id'];
+
+  $stmt  = "SELECT treks.trek_id,treks.trek_type_id,treks.trek_organizer_id, ";
+  $stmt .= "trek_type.trek_type_name,";
+  $stmt .= "treks.trek_name,treks.trek_departure,treks.trek_arrival,treks.trek_about,";
+  $stmt .= "treks.trek_location,treks.trek_duration,treks.trek_image,treks.trek_views,";
+  $stmt .= "treks.trek_altitude,treks.trek_price,treks.trek_status ";
+  $stmt .= "FROM treks ";
+  $stmt .= "INNER JOIN trek_type ON treks.trek_type_id = trek_type.trek_type_id ";
+  $stmt .= "WHERE trek_organizer_id = $organizer_id";
+  $query = mysqli_query($connection, $stmt);
+  confirmQuery($query);
+
+  return $query;
+}
+
 function selectTreksForSoop(){
   global $connection;
 
@@ -216,17 +242,7 @@ function updateUser($user_id, $user_firstname, $user_lastname, $username, $user_
   mysqli_stmt_bind_param($stmt, "ssssssssi", $user_firstname, $user_lastname, $username, $user_email, $user_phonenumber, $user_image, $user_dob, $user_password, $user_id);
   mysqli_stmt_execute($stmt);
   confirmQuery($stmt);
-
-  $_SESSION['user_id']          = $user_id;
-  $_SESSION['user_firstname']   = $user_firstname;
-  $_SESSION['user_lastname']    = $user_lastname;
-  $_SESSION['username']         = $username;
-  $_SESSION['user_email']       = $user_email;
-  $_SESSION['user_phonenumber'] = $user_phonenumber;
-  $_SESSION['user_dob']         = $user_dob;
-  $_SESSION['user_password']    = $user_password;
-  $_SESSION['user_role']        = $user_role;
-
+  
   header("Location: ./profile.php");
 }
 
