@@ -49,6 +49,7 @@ if (isset($_GET['trek_id'])) {
     $trek_altitude     = $row['trek_altitude'];
     $trek_price        = $row['trek_price'];
     $trek_status       = $row['trek_status'];
+    $trek_organizer_id = $row['trek_organizer_id'];
 
     $user_firstname    = $row['user_firstname'];
     $user_lastname     = $row['user_lastname'];
@@ -146,41 +147,58 @@ if (isset($_GET['trek_id'])) {
 
           <span style="font-size: 2rem; font-weight: 400;">Type : </span>
           <?php echo $trek_type_name; ?>
-          <br>
 
+          <br>
+          <br>
 
           <form class="text-center" action="" method="post">
             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
             <input type="hidden" name="trek_id" value="<?php echo $trek_id; ?>">
 
             <?php
-              if (isLoggedout()):
-            ?>
+            if (isLoggedout() || isOrganizer() || isAdmin()):
+              ?>
 
-            <button type="button" class="btn btn-dark btn-rounded-lg" disabled>
-              <?php echo mysqli_num_rows($interested_num); ?>
-              Interested
-            </button>
+              <button type="button" class="btn btn-outline-dark btn-rounded-lg" disabled>
+                <?php echo mysqli_num_rows($interested_num); ?>
+                Interested
+              </button>
 
             <?php else:
               $user_id = $_SESSION['user_id'];
               $user_interest = mysqli_query($connection, "SELECT * FROM interested where user_id = $user_id AND trek_id = $trek_id");
-            ?>
-              <input type="submit" name="interested" value="<?php echo mysqli_num_rows($interested_num); ?> Interested"
+              ?>
+              <div class="d-flex justify-content-center">
 
-              <?php
+                <div class="text-success mr-3">
+
+                  <div class="d-flex align-items-start">
+                    <i class="fa fa-thumbs-up"></i>
+                    <?php echo mysqli_num_rows($interested_num); ?>
+                  </div>
+
+                  <div class="">
+                      People interested
+                  </div>
+                </div>
+
+
+                <input type="submit" name="interested" value="Interested?" class="btn btn-md
+
+                <?php
                 if (mysqli_num_rows($user_interest) < 0 || mysqli_num_rows($interested_num) >= 0):
-                  echo 'class="btn btn-lg btn-primary"';
+                  echo 'btn-outline-primary"';
                 endif;
-              ?>
-              <?php
+                ?>
+                <?php
                 if (mysqli_num_rows($user_interest) > 0):
-                 echo 'class="btn btn-lg btn-success" disabled';
+                  echo 'btn-outline-success" disabled';
                 endif;
-              ?>
-              >
-            <?php
-              endif;
+                ?>
+                >
+              </div>
+              <?php
+            endif;
             ?>
 
 
@@ -198,7 +216,7 @@ if (isset($_GET['trek_id'])) {
 
 
 
-<?php
+  <?php
 }else{
   header("Location: ./index.php");
 }
