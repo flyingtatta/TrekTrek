@@ -137,9 +137,9 @@ if (isset($_GET['trek_id'])) {
               $user_like = mysqli_query($connection, "SELECT * FROM interested where user_id = $user_id AND trek_id = $trek_id");
             ?>
             <input type="submit" name="interested" value="<?php echo mysqli_num_rows($query); ?> Interested"
-            class="lead" style="background: transparent; border:none; font-size: 1.7rem;
+            class="lead" style="background: transparent; border: 1px solid; font-size: 1.7rem;
             <?php if (mysqli_num_rows($user_like) > 0): ?>
-              <?php echo 'color:#1ed761;'; ?>
+              <?php echo 'color:#1ed761; border: 2px solid';?>
             <?php endif; ?>"
             <?php if (mysqli_num_rows($user_like) > 0): ?>
               <?php echo "disabled"; ?>
