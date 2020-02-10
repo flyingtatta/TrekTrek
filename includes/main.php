@@ -3,10 +3,12 @@
 if (!isset($_SESSION['user_role'])) {
   $query = $query = selectTreksWithStatusOn();
 }else {
-  if ($_SESSION['user_role'] == 'Organizer' OR $_SESSION['user_role'] == 'Admin') {
-    $query = selectTreksForSoop();
-  }else if ($_SESSION['user_role'] == 'User') {
+  if ($_SESSION['user_role'] == 'Organizer') {
+    $query = selectTreksForOrganizer();
+  }elseif ($_SESSION['user_role'] == 'User') {
     $query = selectTreksWithStatusOn();
+  }elseif ($_SESSION['user_role'] == 'Admin') {
+    $query = selectTreksForSoop();
   }
 }
 
@@ -19,8 +21,8 @@ if (isset($_GET['type'])) {
 ?>
 
 <main class="mx-3">
-  <div class="card-columns">
-    <!-- <div class="row"> -->
+  <!-- <div class="card-columns"> -->
+    <div class="row">
     <?php
     while ($row = mysqli_fetch_assoc($query)) {
       $trek_id        = $row['trek_id'];
@@ -37,12 +39,30 @@ if (isset($_GET['type'])) {
       $trek_status    = $row['trek_status'];
       ?>
 
-      <!-- <div class="col-12 col-md-4"> -->
-        <div class="card card-border" style="width: auto;">
+      <div class="col-12 col-md-4">
+        <div class="card card-border">
           <img src="organizer/trek-images/<?php echo $trek_image; ?>" class="card-img-top">
           <div class="card-body card-border">
-            <h5 class="card-title">
+            <h5 class="card-title d-flex justify-content-between">
               <?php echo $trek_name; ?>
+
+              <div class="small" style="font-weight: lighter;">
+                <i class="fa fa-eye"></i>
+                <?php echo viewsCount($trek_id); ?>
+
+              <?php if (isAdmin() || isOrganizer()): ?>
+                <span class="badge badge-primary badge-pill" style="
+                  <?php if ($trek_status == 'Off'): ?>
+                    background-color: #dc3545;
+                  <?php else: ?>
+                    background-color: #28a745;
+                  <?php endif; ?>
+                     font-weight: 400;">
+                  <?php echo $trek_status; ?>
+                </span>
+              <?php endif; ?>
+            </div>
+
             </h5>
             <ul class="list-group list-group-flush" style="background-color: none;">
               <li class="list-group-item list-gradient" style="text-decoration: none;">Price : &#8377;<?php echo $trek_price; ?></li>
@@ -65,11 +85,11 @@ if (isset($_GET['type'])) {
             $trek_name_trim = str_replace(" ", "$trek_id", $trek_name);
             ?>
             <div class="d-flex justify-content-between">
-              <a href="<?php echo "#".$trek_name_trim.$trek_id; ?>" data-toggle="modal" class="btn btn-primary">
+              <a href="<?php echo "#".$trek_name_trim.$trek_id; ?>" data-toggle="modal" class="btn btn-sm btn-primary" style="border-radius: 20px;">
                 Quick Details!
               </a>
 
-              <a href="./trek.php?trek_id=<?php echo $trek_id; ?>" class="btn btn-primary">
+              <a href="./trek.php?trek_id=<?php echo $trek_id; ?>" class="btn btn-sm btn-primary" style="border-radius: 20px;">
                 Full Details
               </a>
             </div>
@@ -150,7 +170,7 @@ if (isset($_GET['type'])) {
           </div>
         </div>
         <br>
-      <!-- </div> -->
+      </div>
     <?php } ?>
   </div>
 </main>

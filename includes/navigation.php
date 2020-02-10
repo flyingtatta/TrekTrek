@@ -3,6 +3,7 @@ if (isset($_POST['submit'])) {
   $user_data    = $_POST['user_data'];
   $user_password = $_POST['user_password'];
   loginUser($user_data, $user_password);
+  $page_name =  basename($_SERVER['PHP_SELF']);
 }
 ?>
 <div class="my-3 mx-3">
@@ -15,12 +16,28 @@ if (isset($_POST['submit'])) {
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
 
-        <li class="nav-item active">
-          <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-        </li>
 
+        <!-- HOME LINK -->
+        <li class="nav-item">
+          <a
+          <?php if (basename($_SERVER['PHP_SELF']) == 'index.php'): ?>
+            style="color: #24FE41;"
+          <?php else: ?>
+            style="color: white;"
+          <?php endif; ?>
+          class="nav-link" href="index.php">Home <span class="sr-only">(current)</span>
+         </a>
+        </li>
+        <!-- END HOME LINK -->
+
+        <!-- TYPE OF TREK LINK -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a
+          <?php if (isset($_GET['type'])): ?>
+            style="color: #24FE41;"
+          <?php else: ?>
+            style="color: white;"
+          <?php endif; ?>class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Type-o-trek
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -30,27 +47,40 @@ if (isset($_POST['submit'])) {
               while($row = mysqli_fetch_assoc($query)){
               $trek_type_id = $row['trek_type_id'];
             ?>
-              <a class="dropdown-item" href="./index.php?type=<?php echo $trek_type_id; ?>"><?php trekTypeNameDisplay($trek_type_id); ?></a>
+              <a
+              class="dropdown-item
+              <?php if ($_GET['type'] == $trek_type_id):
+                echo "active";
+              endif; ?>" href="./index.php?type=<?php echo $trek_type_id; ?>">
+                <?php trekTypeNameDisplay($trek_type_id); ?>
+              </a>
             <?php
               }
             ?>
 
           </div>
         </li>
+        <!-- END OF TYPE OF TREK LINK -->
 
       <?php if (isLoggedout()): ?>
         <li class="nav-item">
-          <a class="nav-link" href="register.php">Register</a>
+          <a
+          <?php if (basename($_SERVER['PHP_SELF']) == 'register.php'): ?>
+            style="color: #24FE41;"
+          <?php else: ?>
+            style="color: white;"
+          <?php endif; ?>
+          class="nav-link" href="register.php">Register</a>
         </li>
       <?php endif; ?>
 
 
       <?php if (isOrganizer()): ?>
         <li class="nav-item">
-          <a class="nav-link" href="organizer">Organizer</a>
+          <a style="color: white;" class="nav-link" href="organizer">Organizer</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a style="color: white;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Treks
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -63,11 +93,11 @@ if (isset($_POST['submit'])) {
       <?php elseif (isAdmin()): ?>
 
         <li class="nav-item">
-          <a class="nav-link" href="admin">Admin</a>
+          <a style="color: white;" class="nav-link" href="admin">Admin</a>
         </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a style="color: white;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Users
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">

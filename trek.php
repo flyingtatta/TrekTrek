@@ -49,6 +49,7 @@ if (isset($_GET['trek_id'])) {
     $trek_altitude     = $row['trek_altitude'];
     $trek_price        = $row['trek_price'];
     $trek_status       = $row['trek_status'];
+    $trek_organizer_id = $row['trek_organizer_id'];
 
     $user_firstname    = $row['user_firstname'];
     $user_lastname     = $row['user_lastname'];
@@ -57,9 +58,37 @@ if (isset($_GET['trek_id'])) {
 
     $trek_type_name    = $row['trek_type_name'];
   }
+  $interested_num = mysqli_query($connection, "SELECT * FROM interested WHERE trek_id = $trek_id");
+  $comments_num = mysqli_query($connection, "SELECT * FROM comments WHERE trek_id = $trek_id");
   ?>
 
   <div class="mx-3 my-3">
+
+    <ul class="nav nav-pills nav-fill mb-2">
+      <li class="nav-item mr-2" style="border: 1px solid #38ef7d; border-radius: 10px;">
+        <a class="nav-link">Interested
+          <span class="badge badge-primary">
+            <?php echo mysqli_num_rows($interested_num); ?>
+          </span>
+        </a>
+      </li>
+
+      <li class="nav-item mx-5" style="border: 1px solid #38ef7d; border-radius: 10px;">
+        <a class="nav-link">Views
+          <span class="badge badge-primary">
+            <?php echo viewsCount($trek_id); ?>
+          </span>
+        </a>
+      </li>
+      <li class="nav-item ml-2" style="border: 1px solid #38ef7d; border-radius: 10px;">
+        <a class="nav-link">Comments
+          <span class="badge badge-primary">
+            <?php echo mysqli_num_rows($comments_num); ?>
+          </span>
+        </a>
+      </li>
+    </ul>
+
     <div class="row">
       <div class="col-12 col-md-6">
         <h5 class="display-3" style="font-weight: 400;"><?php echo $trek_name; ?></h5>
@@ -118,24 +147,60 @@ if (isset($_GET['trek_id'])) {
 
           <span style="font-size: 2rem; font-weight: 400;">Type : </span>
           <?php echo $trek_type_name; ?>
+
           <br>
-
-
-          <span style="font-size: 2rem; font-weight: 400;">Views:</span>
-          <?php
-            echo viewsCount($trek_id);
-          ?>
           <br>
-
 
           <form class="text-center" action="" method="post">
             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
             <input type="hidden" name="trek_id" value="<?php echo $trek_id; ?>">
+
             <?php
+            if (isLoggedout() || isOrganizer() || isAdmin()):
+              ?>
+
+              <button type="button" class="btn btn-outline-dark btn-rounded-lg" disabled>
+                <?php echo mysqli_num_rows($interested_num); ?>
+                Interested
+              </button>
+
+            <?php else:
               $user_id = $_SESSION['user_id'];
-              $query = mysqli_query($connection, "SELECT * FROM interested WHERE trek_id = $trek_id");
-              $user_like = mysqli_query($connection, "SELECT * FROM interested where user_id = $user_id AND trek_id = $trek_id");
+              $user_interest = mysqli_query($connection, "SELECT * FROM interested where user_id = $user_id AND trek_id = $trek_id");
+              ?>
+              <div class="d-flex justify-content-center">
+
+                <div class="text-success mr-3">
+
+                  <div class="d-flex align-items-start">
+                    <i class="fa fa-thumbs-up"></i>
+                    <?php echo mysqli_num_rows($interested_num); ?>
+                  </div>
+
+                  <div class="">
+                      People interested
+                  </div>
+                </div>
+
+
+                <input type="submit" name="interested" value="Interested?" class="btn btn-md
+
+                <?php
+                if (mysqli_num_rows($user_interest) < 0 || mysqli_num_rows($interested_num) >= 0):
+                  echo 'btn-outline-primary"';
+                endif;
+                ?>
+                <?php
+                if (mysqli_num_rows($user_interest) > 0):
+                  echo 'btn-outline-success" disabled';
+                endif;
+                ?>
+                >
+              </div>
+              <?php
+            endif;
             ?>
+<<<<<<< HEAD
             <input type="submit" name="interested" value="<?php echo mysqli_num_rows($query); ?> Interested"
             class="lead" style="background: transparent; border: 1px solid; font-size: 1.7rem;
             <?php if (mysqli_num_rows($user_like) > 0): ?>
@@ -145,6 +210,12 @@ if (isset($_GET['trek_id'])) {
               <?php echo "disabled"; ?>
             <?php endif; ?>
             >
+=======
+
+
+
+
+>>>>>>> 5584ead137ff14d08da2aee29ca6443567ba9142
           </form>
         </p>
 
@@ -157,7 +228,7 @@ if (isset($_GET['trek_id'])) {
 
 
 
-<?php
+  <?php
 }else{
   header("Location: ./index.php");
 }

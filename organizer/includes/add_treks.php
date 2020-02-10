@@ -36,14 +36,22 @@ if (isset($_POST['submit'])) {
   if (empty($_POST['trek_departure'])) {
     $error['trek_departure'] = 'Cannot be empty';
   }
+  // TODO: TO CHECK WHETHER THE DATE IS AFTER CURRENT DATE OR NOT
+  // if ($_POST['trek_departure'] < strtotime('now')) {
+  //   $error['trek_departure'] = "We can't time travel";
+  // }
   if (empty($_POST['trek_arrival'])) {
     $error['trek_arrival'] = 'Cannot be empty';
   }
+  if ($_POST['trek_departure'] > $_POST['trek_arrival']) {
+    $error['trek_arrival'] = "Date is invalid";
+  }
+
 
   if (empty($_POST['trek_about'])) {
     $error['trek_about'] = 'Cannot be empty';
   }
-  if (strlen($_POST['trek_about']) < 100) {
+  if (strlen($_POST['trek_about']) < 50) {
     $error['trek_about'] = 'Atleast 30-35 words describing the place';
   }
 
@@ -101,7 +109,7 @@ if (isset($_POST['submit'])) {
       <div class="col-12 col-sm-6 form-group">
         <label for="">Trek Departure:</label>
         <input type="date" name="trek_departure" class="form-control"
-        value="<?php if(isset($_POST['submit'])){ echo $_POST['trek_departure']; } ?>">
+        value="<?php if(isset($_POST['submit'])){ echo $_POST['trek_departure']; }else{ echo date("Y-m-d"); } ?>">
         <p class="text-danger">
           <?php
           if (isset($error['trek_departure'])) {
@@ -114,7 +122,7 @@ if (isset($_POST['submit'])) {
       <div class="col-12 col-sm-6 form-group">
         <label for="">Trek Arrival:</label>
         <input type="date" name="trek_arrival" class="form-control"
-        value="<?php if(isset($_POST['submit'])){ echo $_POST['trek_arrival']; } ?>">
+        value="<?php if(isset($_POST['submit'])){ echo $_POST['trek_arrival']; }?>">
         <p class="text-danger">
           <?php
           if (isset($error['trek_arrival'])) {
