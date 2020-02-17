@@ -61,7 +61,13 @@ if (!isset($_POST['search'])) {
         <td class="text-center"><?php echo $username; ?></td>
         <td class="text-center"><?php echo $user_email; ?></td>
         <td class="text-center"><?php echo $user_phonenumber; ?></td>
-        <td class="text-center"><img src="../images/<?php echo $user_image; ?>" width="200" height="100"></td>
+        <td class="text-center">
+          <?php if (!empty($user_image)): ?>
+            <img src="../images/<?php echo $user_image; ?>" width="200" height="100">
+          <?php else: ?>
+            <img src="../images/default-profile.png" width="100" height="100">
+          <?php endif; ?>
+        </td>
         <td class="text-center"><?php echo $user_dob; ?></td>
         <td class="text-center">
           <form class="" action="" method="post" onsubmit="return confirm('Are you sure you want to change?');">

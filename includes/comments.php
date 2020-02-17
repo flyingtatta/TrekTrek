@@ -16,7 +16,11 @@
       <div class="row">
         <div class="col-12">
           <p class="lead m-0" style="font-size: 2.3rem;">
-            <img src="./images/<?php echo $_SESSION['user_image']; ?>" width="60" height="60" style="border-radius:50%;">
+            <?php if (!empty($_SESSION['user_image'])): ?>
+              <img src="./images/<?php echo $_SESSION['user_image']; ?>" width="60" height="60" style="border-radius:50%;">
+            <?php else: ?>
+              <img src="./images/default-profile.png" width="60" height="60" style="border-radius:50%;">
+            <?php endif; ?>
             <?php echo $_SESSION['user_firstname'] . ". " . $_SESSION['user_lastname']; ?></p>
           </div>
         </div>
@@ -61,7 +65,11 @@
               <div class="d-flex justify-content-between">
 
                 <div class="lead" style="font-size: 2.3rem;">
-                  <img src="./images/<?php echo $user_image; ?>" width="60" height="60" style="border-radius:50%;">
+                  <?php if (!empty($user_image)): ?>
+                    <img src="./images/<?php echo $user_image; ?>" width="60" height="60" style="border-radius:50%;">
+                  <?php else: ?>
+                    <img src="./images/default-profile.png" width="60" height="60" style="border-radius:50%;">
+                  <?php endif; ?>
                   <span class="text-color">
                     <?php echo $user_firstname . ". " . $user_lastname; ?>
                   </span>

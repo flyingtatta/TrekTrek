@@ -170,27 +170,29 @@ if (isset($_GET['trek_id'])) {
               ?>
               <div class="d-flex justify-content-center">
 
-                <div class="text-success mr-3">
+                <div class="text-success mr-3" style="font-family: Open Sans;font-size: 1.3rem; font-weight: lighter;">
 
                   <div class="d-flex align-items-start">
-                    <i class="fa fa-thumbs-up"></i>
-                    <?php echo mysqli_num_rows($interested_num); ?>
+                    <i class="fa fa-thumbs-up">
+                      <span style="font-family: Open Sans;font-weight: lighter;">
+                        <?php echo mysqli_num_rows($interested_num); ?>
+                      </span>
+                    </i>
                   </div>
 
-                  <div class="">
+                  <div style="font-family: Open Sans;">
                       People interested
                   </div>
                 </div>
 
 
-                <input type="submit" name="interested" value="Interested?" class="btn btn-md
+                <input type="submit" name="interested" value="Interested?" class="d-block btn btn-lg
 
                 <?php
                 if (mysqli_num_rows($user_interest) < 0 || mysqli_num_rows($interested_num) >= 0):
                   echo 'btn-outline-primary"';
                 endif;
-                ?>
-                <?php
+
                 if (mysqli_num_rows($user_interest) > 0):
                   echo 'btn-outline-success" disabled';
                 endif;

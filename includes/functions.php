@@ -3,7 +3,7 @@
 function update_status(){
   global $connection;
   $current_date = date('Y-m-d');
-  $query = mysqli_query($connection, "UPDATE treks SET trek_status = 'Off' WHERE '$current_date' > trek_departure");
+  $query = mysqli_query($connection, "UPDATE treks SET trek_status = 'Off' WHERE '$current_date' >= trek_departure");
   confirmQuery($query);
 }
 
@@ -242,7 +242,7 @@ function updateUser($user_id, $user_firstname, $user_lastname, $username, $user_
   mysqli_stmt_bind_param($stmt, "ssssssssi", $user_firstname, $user_lastname, $username, $user_email, $user_phonenumber, $user_image, $user_dob, $user_password, $user_id);
   mysqli_stmt_execute($stmt);
   confirmQuery($stmt);
-  
+
   header("Location: ./profile.php");
 }
 
