@@ -141,7 +141,10 @@ if (isset($_GET['trek_id'])) {
           value="<?php
           if(isset($_POST['submit'])){
             echo $_POST['trek_departure'];
-          }else{
+          }elseif($trek_departure <= date('Y-m-d')){
+            echo date('Y-m-d');
+          }
+          else{
             echo $trek_departure;
           } ?>">
           <p class="text-danger">
@@ -159,7 +162,10 @@ if (isset($_GET['trek_id'])) {
           value="<?php
           if(isset($_POST['submit'])){
             echo $_POST['trek_arrival'];
-          }else{
+          }elseif($trek_departure <= date('Y-m-d')) {
+            echo date('Y-m-d');
+          }
+          else{
             echo $trek_arrival;
           } ?>">
           <p class="text-danger">
