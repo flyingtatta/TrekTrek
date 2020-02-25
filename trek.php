@@ -202,10 +202,22 @@ if (isset($_GET['trek_id'])) {
               <?php
             endif;
             ?>
+<<<<<<< HEAD
+            <input type="submit" name="interested" value="<?php echo mysqli_num_rows($query); ?> Interested"
+            class="lead" style="background: transparent; border: 1px solid; font-size: 1.7rem;
+            <?php if (mysqli_num_rows($user_like) > 0): ?>
+              <?php echo 'color:#1ed761; border: 2px solid';?>
+            <?php endif; ?>"
+            <?php if (mysqli_num_rows($user_like) > 0): ?>
+              <?php echo "disabled"; ?>
+            <?php endif; ?>
+            >
+=======
 
 
 
 
+>>>>>>> 5584ead137ff14d08da2aee29ca6443567ba9142
           </form>
         </p>
 
