@@ -1,11 +1,12 @@
+
 .nav-bg{
-  background: linear-gradient(to right, #2193b0, #6dd5ed);
+  background: linear-gradient(to right, #6dd5ed, #2193b0);
 }
 
 .card-border{
-   border-image: linear-gradient(to right, #ffff1c, #00c3ff);
-   border-image-slice: 1;
-   border-width: 1px;
+  border-image: linear-gradient(to right, #ffff1c, #00c3ff);
+  border-image-slice: 1;
+  border-width: 1px;
 }
 
 .list-gradient{

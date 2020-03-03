@@ -32,6 +32,7 @@ if (!isset($_POST['search'])) {
 <table class="table table-bordered">
   <thead>
     <td>Delete</th>
+    <td>Info</td>
     <td>Edit</th>
     <td>View</th>
     <th class="text-center">Id</th>
@@ -74,6 +75,13 @@ if (!isset($_POST['search'])) {
             <input type="hidden" name="trek_id" value="<?php echo $trek_id; ?>">
             <input type="submit" name="delete" value="Delete" class="btn btn-danger">
           </form>
+        </td>
+        <td class="text-center">
+          <a href="./treks.php?source=trek_info&id=<?php echo $trek_id; ?>">
+            <span class="badge badge-primary badge-pill">
+              <i class="fa fa-info"></i>
+            </span>
+          </a>
         </td>
         <td class="text-center">
           <a href="./treks.php?source=edit_treks&trek_id=<?php echo $trek_id; ?>">

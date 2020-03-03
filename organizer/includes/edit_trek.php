@@ -35,12 +35,22 @@ if (isset($_GET['trek_id'])) {
       $error['trek_name'] = 'Trek Name cannot be empty';
     }
 
+    // DATE VALIDATION
     if (empty($_POST['trek_departure'])) {
       $error['trek_departure'] = 'Cannot be empty';
     }
     if (empty($_POST['trek_arrival'])) {
       $error['trek_arrival'] = 'Cannot be empty';
     }
+
+    if ($_POST['trek_departure'] < date('Y-m-d')) {
+       $error['trek_departure'] = "We can't time travel";
+    }
+
+    if ($_POST['trek_departure'] > $_POST['trek_arrival']) {
+      $error['trek_arrival'] = "Arrival cannot be before departure";
+    }
+    // DATE VALIDATION END
 
     if (empty($_POST['trek_about'])) {
       $error['trek_about'] = 'Cannot be empty';

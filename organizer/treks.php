@@ -1,6 +1,6 @@
 <?php
-   include 'includes/organizer_header.php';
-   session_start();
+include 'includes/organizer_header.php';
+session_start();
 ?>
 <?php
 if (isOrganizer()){
@@ -14,20 +14,24 @@ if (isOrganizer()){
   switch ($source) {
     case 'add_treks':
       include 'includes/add_treks.php';
-      break;
+    break;
 
     case 'edit_treks':
       include 'includes/edit_trek.php';
-      break;
+    break;
+
+    case 'trek_info':
+      include 'includes/trek_info.php';
+    break;
 
     default:
       include 'includes/view_treks.php';
-      break;
-    }
+    break;
+  }
 
   include 'includes/organizer_footer.php';
 
 }else{
-   header("Location: ../index.php");
+  header("Location: ../index.php");
 }
 ?>

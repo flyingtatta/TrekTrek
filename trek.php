@@ -59,7 +59,7 @@ if (isset($_GET['trek_id'])) {
     $trek_type_name    = $row['trek_type_name'];
   }
   $interested_num = mysqli_query($connection, "SELECT * FROM interested WHERE trek_id = $trek_id");
-  $comments_num = mysqli_query($connection, "SELECT * FROM comments WHERE trek_id = $trek_id");
+  $comments_num   = mysqli_query($connection, "SELECT * FROM comments WHERE trek_id = $trek_id");
   ?>
 
   <div class="mx-3 my-3">
@@ -151,74 +151,55 @@ if (isset($_GET['trek_id'])) {
           <br>
           <br>
 
-          <form class="text-center" action="" method="post">
-            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
-            <input type="hidden" name="trek_id" value="<?php echo $trek_id; ?>">
 
-            <?php
-            if (isLoggedout() || isOrganizer() || isAdmin()):
-              ?>
-
+          <div class="text-center">
+            <?php if (isLoggedout() || isOrganizer() || isAdmin()): ?>
               <button type="button" class="btn btn-outline-dark btn-rounded-lg" disabled>
                 <?php echo mysqli_num_rows($interested_num); ?>
                 Interested
               </button>
 
-            <?php else:
-              $user_id = $_SESSION['user_id'];
-              $user_interest = mysqli_query($connection, "SELECT * FROM interested where user_id = $user_id AND trek_id = $trek_id");
-              ?>
-              <div class="d-flex justify-content-center">
+            <?php else: ?>
 
-                <div class="text-success mr-3" style="font-family: Open Sans;font-size: 1.3rem; font-weight: lighter;">
-
-                  <div class="d-flex align-items-start">
-                    <i class="fa fa-thumbs-up">
-                      <span style="font-family: Open Sans;font-weight: lighter;">
-                        <?php echo mysqli_num_rows($interested_num); ?>
-                      </span>
-                    </i>
-                  </div>
-
-                  <div style="font-family: Open Sans;">
-                      People interested
-                  </div>
-                </div>
-
-
-                <input type="submit" name="interested" value="Interested?" class="d-block btn btn-lg
+              <form action="" method="post">
+                <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                <input type="hidden" name="trek_id" value="<?php echo $trek_id; ?>">
 
                 <?php
-                if (mysqli_num_rows($user_interest) < 0 || mysqli_num_rows($interested_num) >= 0):
-                  echo 'btn-outline-primary"';
-                endif;
-
-                if (mysqli_num_rows($user_interest) > 0):
-                  echo 'btn-outline-success" disabled';
-                endif;
+                $user_id       = $_SESSION['user_id'];
+                $user_interest = mysqli_query($connection, "SELECT * FROM interested where user_id = $user_id AND trek_id = $trek_id");
                 ?>
-                >
-              </div>
-              <?php
-            endif;
-            ?>
-<<<<<<< HEAD
-            <input type="submit" name="interested" value="<?php echo mysqli_num_rows($query); ?> Interested"
-            class="lead" style="background: transparent; border: 1px solid; font-size: 1.7rem;
-            <?php if (mysqli_num_rows($user_like) > 0): ?>
-              <?php echo 'color:#1ed761; border: 2px solid';?>
-            <?php endif; ?>"
-            <?php if (mysqli_num_rows($user_like) > 0): ?>
-              <?php echo "disabled"; ?>
+
+                <div class="d-flex justify-content-center">
+                  <div class="mr-3" style="font-family: Open Sans;font-size: 1.3rem; font-weight: lighter; color: #19e466">
+                    <div class="d-flex align-items-start">
+                      <i class="fa fa-thumbs-up">
+                        <span style="font-family: Open Sans; font-weight: lighter;">
+                          <?php echo mysqli_num_rows($interested_num); ?>
+                        </span>
+                      </i>
+                    </div>
+                    <div style="font-family: Open Sans;">
+                      <?php if (mysqli_num_rows($interested_num) === 0): ?>
+                        <?php echo "No one Interested"; ?>
+                      <?php elseif (mysqli_num_rows($interested_num) === 1): ?>
+                        <?php echo "Person Interested"; ?>
+                      <?php else: ?>
+                        <?php echo "People Interested"; ?>
+                      <?php endif; ?>
+                    </div>
+                  </div>
+
+                  <?php if (mysqli_num_rows($user_interest) <= 0): ?>
+                    <input type="submit" name="interested" value="Interested?" class="d-block btn btn-lg btn-outline-primary">
+                  <?php elseif (mysqli_num_rows($user_interest) > 0): ?>
+                    <button class="d-block btn btn-lg btn-outline-success" disabled>You're Interested</button>
+                  <?php endif; ?>
+
+                </div>
+              </form>
             <?php endif; ?>
-            >
-=======
-
-
-
-
->>>>>>> 5584ead137ff14d08da2aee29ca6443567ba9142
-          </form>
+          </div>
         </p>
 
       </div>

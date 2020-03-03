@@ -7,7 +7,7 @@ if (isset($_POST['submit'])) {
 }
 ?>
 <div class="my-3 mx-3">
-  <nav class="navbar navbar-expand-lg navbar-dark rounded rounded-lg nav-bg">
+  <nav class="navbar navbar-expand-lg navbar-dark rounded rounded-lg nav-bg" style="background: linear-gradient(to right, #009fff, #ec2f4b);">
     <a class="navbar-brand">TrekTrek</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -115,7 +115,7 @@ if (isset($_POST['submit'])) {
         <form class="form-inline" action="" method="post">
           <input class="form-control mr-2" type="text"     placeholder="Email/Username"    name="user_data" >
           <input class="form-control mr-2" type="password" placeholder="Password" name="user_password" >
-          <input class="form-control mr-2 btn btn-primary border-white" type="submit" name="submit" value="Login">
+          <input class="form-control mr-2 btn btn-primary" type="submit" name="submit" value="Login">
         </form>
 
       <?php else: ?>
