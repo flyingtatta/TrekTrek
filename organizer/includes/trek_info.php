@@ -1,5 +1,6 @@
 <?php
-$interested = mysqli_query($connection, "SELECT concat_ws(' ', user_firstname, user_lastname, ':',user_phonenumber,':',user_email) AS 'user_details' FROM interested INNER JOIN treks ON interested.trek_id = treks.trek_id INNER JOIN users ON interested.user_id = users.user_id");
+$trek_id = $_GET['id'];
+$interested = mysqli_query($connection, "SELECT concat_ws(' ', user_firstname, user_lastname, ':',user_phonenumber,':',user_email) AS 'user_details' FROM interested INNER JOIN treks ON interested.trek_id = treks.trek_id INNER JOIN users ON interested.user_id = users.user_id WHERE treks.trek_id = $trek_id");
 $comments   = mysqli_query($connection, "SELECT * FROM comments INNER JOIN treks ON comments.trek_id = treks.trek_id INNER JOIN users ON comments.user_id = users.user_id");
 ?>
 

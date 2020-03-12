@@ -20,7 +20,7 @@ function registerTrek($trek_name,$trek_departure,$trek_arrival,$trek_about,$trek
 
   global $connection;
 
-  move_uploaded_file($tmp_trek_image, "trek-images/$trek_image");
+  
 
   $user_id = $_SESSION['user_id'];
   $select_trek_organizer_id = mysqli_query($connection, "SELECT organizer_id FROM trek_organizer WHERE organizer_id = $user_id");

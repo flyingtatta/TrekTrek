@@ -44,7 +44,6 @@ if (isset($_GET['trek_id'])) {
     $trek_about        = $row['trek_about'];
     $trek_location     = $row['trek_location'];
     $trek_duration     = $row['trek_duration'];
-    $trek_image        = $row['trek_image'];
     $trek_type_id      = $row['trek_type_id'];
     $trek_altitude     = $row['trek_altitude'];
     $trek_price        = $row['trek_price'];
@@ -57,6 +56,9 @@ if (isset($_GET['trek_id'])) {
     $user_phonenumber  = $row['user_phonenumber'];
 
     $trek_type_name    = $row['trek_type_name'];
+
+    $trek_image        = explode(', ',$row['trek_image']);
+
   }
   $interested_num = mysqli_query($connection, "SELECT * FROM interested WHERE trek_id = $trek_id");
   $comments_num   = mysqli_query($connection, "SELECT * FROM comments WHERE trek_id = $trek_id");
@@ -100,7 +102,8 @@ if (isset($_GET['trek_id'])) {
       </div>
 
       <div class="col-12 col-md-6">
-        <img src="organizer/trek-images/<?php echo $trek_image; ?>" class="img-fluid rounded rounded-lg">
+
+        <img src="organizer/trek-images/<?php echo $trek_image[0]; ?>" class="img-fluid rounded rounded-lg">
       </div>
     </div>
 
@@ -116,7 +119,7 @@ if (isset($_GET['trek_id'])) {
 
     <div class="row">
       <div class="col-12 col-md-6">
-        <img src="organizer/trek-images/<?php echo $trek_image; ?>" class="img-fluid rounded rounded-lg">
+        <img src="organizer/trek-images/<?php echo $trek_image[1]; ?>" class="img-fluid rounded rounded-lg">
       </div>
 
       <div class="col-12 col-md-6 mt-sm-3 text-left align-self-start">

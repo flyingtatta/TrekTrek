@@ -10,14 +10,20 @@ if (isset($_POST['submit'])) {
   $trek_duration    =  abs(round($dateDiff/86400));
 
 
-  $trek_image       = $_FILES['image']['name'];
-  $tmp_trek_image   = $_FILES['image']['tmp_name'];
   $trek_type_id     = escape($_POST['trek_type_id']);
   $type_of_altitude = escape($_POST['type-of-altitude']);
   $trek_altitude    = escape($_POST['trek_altitude']);
   $trek_altitude    = $trek_altitude . $type_of_altitude;
   $trek_price       = escape($_POST['trek_price']);
   $trek_status      = 'On';
+
+  foreach ($_FILES['image']['name'] as $key => $value) {
+    $trek_image       = $_FILES['image']['name'][$key];
+    $tmp_trek_image   = $_FILES['image']['tmp_name'][$key];
+    $directory = 'trek-images/';
+    move_uploaded_file($tmp_trek_image, $directory.$trek_image);
+  }
+  $trek_image = implode(', ',$_FILES['image']['name']);
 
   $error = [
     'trek_name' => '',
@@ -40,7 +46,7 @@ if (isset($_POST['submit'])) {
 
   //THIS IS TO CHECK IF THE DEPARTURE DATE IS LESSER THANA THE CURRENT DATE
   if ($_POST['trek_departure'] < date('Y-m-d')) {
-     $error['trek_departure'] = "We can't time travel";
+    $error['trek_departure'] = "We can't time travel";
   }
 
   //TO CHECK IF THESE ARE EMPTY
@@ -209,88 +215,88 @@ if (isset($_POST['submit'])) {
         <?php endif; ?>
         " name="trek_type_id">
 
-          <?php
-            $query = mysqli_query($connection, "SELECT * FROM trek_type");
-            confirmQuery($query);
+        <?php
+        $query = mysqli_query($connection, "SELECT * FROM trek_type");
+        confirmQuery($query);
 
-            while($row = mysqli_fetch_assoc($query)){
-              $trek_type_id = $row['trek_type_id'];
-              $trek_type_name = $row['trek_type_name'];
+        while($row = mysqli_fetch_assoc($query)){
+          $trek_type_id = $row['trek_type_id'];
+          $trek_type_name = $row['trek_type_name'];
           ?>
 
           <option value="<?php echo $trek_type_id; ?>"><?php echo $trek_type_name; ?></option>
 
           <?php
-            }
-          ?>
+        }
+        ?>
 
-        </select>
-      </div>
-
-      <div class="col-12 col-sm-6 form-group">
-        <label for="">Image:</label> <br>
-        <input type="file" name="image">
-      </div>
-
+      </select>
     </div>
 
-    <div class="row">
-
-      <div class="col-12 col-sm-6 form-group">
-        <label for="">Altitude:</label>
-        <div class="input-group">
-          <input type="number" name="trek_altitude" class="form-control
-          <?php if (isset($error['trek_altitude'])): ?>
-            <?php echo "border-danger"; ?>
-          <?php elseif (!isset($error['trek_altitude'])): ?>
-            <?php echo "border-success"; ?>
-          <?php endif; ?>
-          " value="<?php if(isset($_POST['submit'])){ echo $_POST['trek_altitude']; } ?>">
-          <div class="input-group-append">
-            <select class="form-control" name="type-of-altitude">
-              <option value="ft">ft</option>
-              <option value="m">m</option>
-            </select>
-          </div>
-        </div>
-
-        <p class="text-danger">
-          <?php
-          if (isset($error['trek_altitude'])) {
-            echo $error['trek_altitude'];
-          }
-          ?>
-        </p>
-      </div>
-
-      <div class="col-12 col-sm-6 form-group">
-        <label for="">Trek Price:</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">&#8377;</span>
-          </div>
-          <input type="number" name="trek_price" class="form-control
-          <?php if (isset($error['trek_price'])): ?>
-            <?php echo "border-danger"; ?>
-          <?php elseif (!isset($error['trek_price'])): ?>
-            <?php echo "border-success"; ?>
-          <?php endif; ?>
-          "
-          value="<?php if(isset($_POST['submit'])){ echo $_POST['trek_price']; } ?>">
-        </div>
-        <p class="text-danger">
-          <?php
-          if (isset($error['trek_price'])) {
-            echo $error['trek_price'];
-          }
-          ?>
-        </p>
-      </div>
-    </div>
-
-    <div class="row justify-content-center">
-      <input type="submit" name="submit" value="Add This Trek" class="btn btn-outline-success">
+    <div class="col-12 col-sm-6 form-group">
+      <label for="">Image:</label> <br>
+      <input type="file" name="image[]" multiple>
     </div>
 
   </div>
+
+  <div class="row">
+
+    <div class="col-12 col-sm-6 form-group">
+      <label for="">Altitude:</label>
+      <div class="input-group">
+        <input type="number" name="trek_altitude" class="form-control
+        <?php if (isset($error['trek_altitude'])): ?>
+          <?php echo "border-danger"; ?>
+        <?php elseif (!isset($error['trek_altitude'])): ?>
+          <?php echo "border-success"; ?>
+        <?php endif; ?>
+        " value="<?php if(isset($_POST['submit'])){ echo $_POST['trek_altitude']; } ?>">
+        <div class="input-group-append">
+          <select class="form-control" name="type-of-altitude">
+            <option value="ft">ft</option>
+            <option value="m">m</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="text-danger">
+        <?php
+        if (isset($error['trek_altitude'])) {
+          echo $error['trek_altitude'];
+        }
+        ?>
+      </p>
+    </div>
+
+    <div class="col-12 col-sm-6 form-group">
+      <label for="">Trek Price:</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">&#8377;</span>
+        </div>
+        <input type="number" name="trek_price" class="form-control
+        <?php if (isset($error['trek_price'])): ?>
+          <?php echo "border-danger"; ?>
+        <?php elseif (!isset($error['trek_price'])): ?>
+          <?php echo "border-success"; ?>
+        <?php endif; ?>
+        "
+        value="<?php if(isset($_POST['submit'])){ echo $_POST['trek_price']; } ?>">
+      </div>
+      <p class="text-danger">
+        <?php
+        if (isset($error['trek_price'])) {
+          echo $error['trek_price'];
+        }
+        ?>
+      </p>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <input type="submit" name="submit" value="Add This Trek" class="btn btn-outline-success">
+  </div>
+
+</div>
 </form>
