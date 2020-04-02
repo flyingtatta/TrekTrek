@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
             ?>
               <a
               class="dropdown-item
-              <?php if ($_GET['type'] == $trek_type_id):
+              <?php if (isset($_GET['type']) && $_GET['type'] == $trek_type_id):
                 echo "active";
               endif; ?>" href="./index.php?type=<?php echo $trek_type_id; ?>">
                 <?php trekTypeNameDisplay($trek_type_id); ?>

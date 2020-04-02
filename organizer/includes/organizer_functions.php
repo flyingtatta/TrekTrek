@@ -20,7 +20,7 @@ function registerTrek($trek_name,$trek_departure,$trek_arrival,$trek_about,$trek
 
   global $connection;
 
-  
+
 
   $user_id = $_SESSION['user_id'];
   $select_trek_organizer_id = mysqli_query($connection, "SELECT organizer_id FROM trek_organizer WHERE organizer_id = $user_id");
@@ -54,10 +54,22 @@ function updateTrek($trek_id,$trek_name,$trek_departure,$trek_arrival,$trek_abou
 
 function deleteTrek($trek_id){
   global $connection;
-  $stmt = mysqli_prepare($connection, "DELETE FROM treks WHERE trek_id = ?");
-  mysqli_stmt_bind_param($stmt, "i", $trek_id);
-  mysqli_stmt_execute($stmt);
-  confirmQuery($stmt);
+  $comments = mysqli_prepare($connection, "DELETE FROM comments WHERE trek_id = ?");
+  mysqli_stmt_bind_param($comments, "i", $trek_id);
+  mysqli_stmt_execute($comments);
+
+  $views = mysqli_prepare($connection, "DELETE FROM views WHERE trek_id = ?");
+  mysqli_stmt_bind_param($views, "i", $trek_id);
+  mysqli_stmt_execute($views);
+
+  $interested = mysqli_prepare($connection, "DELETE FROM interested WHERE trek_id = ?");
+  mysqli_stmt_bind_param($interested, "i", $trek_id);
+  mysqli_stmt_execute($interested);
+
+  $trek = mysqli_prepare($connection, "DELETE FROM treks WHERE trek_id = ?");
+  mysqli_stmt_bind_param($trek, "i", $trek_id);
+  mysqli_stmt_execute($trek);
+  confirmQuery($trek);
   header("Location: treks.php");
 }
 
