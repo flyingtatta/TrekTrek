@@ -1,4 +1,8 @@
-<?php include 'db.php'; ?>
+<?php
+  include 'db.php';
+  session_start();
+  include 'includes/functions.php';
+?>
 <!doctype html>
 <html lang="en">
 <head>
