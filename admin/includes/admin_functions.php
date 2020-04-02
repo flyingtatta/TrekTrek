@@ -12,10 +12,25 @@
   function deleteUser($user_id){
     global $connection;
 
-    $deletestmt = mysqli_prepare($connection, "DELETE FROM users WHERE user_id = ?");
-    mysqli_stmt_bind_param($deletestmt, "i", $user_id);
-    mysqli_stmt_execute($deletestmt);
-    confirmQuery($deletestmt);
+    $delete_interested = mysqli_prepare($connection, "DELETE FROM interested WHERE user_id = ?");
+    mysqli_stmt_bind_param($delete_interested, "i", $user_id);
+    mysqli_stmt_execute($delete_interested);
+    confirmQuery($delete_interested);
+
+    $delete_comments = mysqli_prepare($connection, "DELETE FROM comments WHERE user_id = ?");
+    mysqli_stmt_bind_param($delete_comments, "i", $user_id);
+    mysqli_stmt_execute($delete_comments);
+    confirmQuery($delete_comments);
+
+    $delete_views = mysqli_prepare($connection, "DELETE FROM views WHERE user_id = ?");
+    mysqli_stmt_bind_param($delete_views, "i", $user_id);
+    mysqli_stmt_execute($delete_views);
+    confirmQuery($delete_views);
+
+    $delete_user = mysqli_prepare($connection, "DELETE FROM users WHERE user_id = ?");
+    mysqli_stmt_bind_param($delete_user, "i", $user_id);
+    mysqli_stmt_execute($delete_user);
+    confirmQuery($delete_user);
 
     header("Location: users.php");
   }
