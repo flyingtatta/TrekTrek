@@ -27,8 +27,8 @@ if (isset($_GET['type'])) {
     while ($row = mysqli_fetch_assoc($query)) {
       $trek_id        = $row['trek_id'];
       $trek_name      = $row['trek_name'];
-      $trek_departure = date("d-m-Y", strtotime($row['trek_departure']));
-      $trek_arrival   = date("d-m-Y", strtotime($row['trek_arrival']));
+      $trek_departure = date("d-M-y", strtotime($row['trek_departure']));
+      $trek_arrival   = date("d-M-y", strtotime($row['trek_arrival']));
       $trek_about     = $row['trek_about'];
       $trek_location  = $row['trek_location'];
       $trek_duration  = $row['trek_duration'];
@@ -42,7 +42,47 @@ if (isset($_GET['type'])) {
 
       <div class="col-12 col-md-4">
         <div class="card card-border">
-          <img src="organizer/trek-images/<?php echo $trek_image[0]; ?>" class="card-img-top">
+          <div id="carouselFor<?php echo $trek_id; ?>" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <?php
+                $i = 0;
+                while ($i < sizeof($trek_image)) {
+              ?>
+                <li data-target="#carouselFor<?php echo $trek_id; ?>" data-slide-to="<?php echo $i ?>" <?php if ($i === 0): ?>class="active"<?php endif; ?>></li>
+              <?php
+                $i++;
+                }
+              ?>
+            </ol>
+            <div class="carousel-inner">
+              <?php
+                $i = 0;
+                while ($i < sizeof($trek_image)) {
+              ?>
+
+                <div class="carousel-item <?php if ($i === 0): echo "active"; endif; ?>">
+                  <img src="organizer/trek-images/<?php echo $trek_image[$i]; ?>" class="d-block w-100" alt="...">
+                </div>
+              <?php
+                $i++;
+                }
+              ?>
+                <div class="carousel-item">
+                  <img src="organizer/trek-images/5.jpg" class="d-block w-100" alt="...">
+                </div>
+
+            </div>
+            <a class="carousel-control-prev" href="#carouselFor<?php echo $trek_id; ?>" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselFor<?php echo $trek_id; ?>" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+          <!-- <img src="organizer/trek-images/<?php //echo $trek_image[0]; ?>" class="card-img-top"> -->
+
           <div class="card-body card-border">
             <h5 class="card-title d-flex justify-content-between">
               <?php echo $trek_name; ?>
@@ -97,78 +137,9 @@ if (isset($_GET['type'])) {
         </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="<?php echo $trek_name_trim.$trek_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <?php include 'includes/main_modal.php'; ?>
 
-          <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle"><?php echo $trek_name; ?></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
 
-                <ul class="nav nav-tabs">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="<?php echo "#".$trek_name.$trek_id.'about'; ?>">About</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="<?php echo "#".$trek_name.$trek_id.'highlights'; ?>">Highlights</a>
-                  </li>
-                </ul>
-
-                <br>
-
-                <p id="<?php echo $trek_name.$trek_id.'about'; ?>" class="text-justify">
-                  <span class="lead text-primary">About</span>
-                  <br>
-                  <?php echo $trek_about; ?>
-                </p>
-
-                <p class="text-justify"  id="<?php echo $trek_name.$trek_id.'highlights'; ?>">
-                  <span class="lead text-primary">Highlights</span>
-                </p>
-
-                <ul class="list-group">
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span class="badge badge-primary badge-pill"><?php echo $trek_departure; ?></span>
-                    <span class="badge badge-primary badge-pill"><i class="fa fa-arrow-circle-right"></i></span>
-                    <span class="badge badge-primary badge-pill"><?php echo $trek_arrival; ?></span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Days
-                    <span class="badge badge-primary badge-pill"><?php echo $trek_duration; ?></span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Location
-                    <span class="badge badge-primary badge-pill"><i class="fa fa-map-marker"></i> <?php echo $trek_location; ?></span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Price
-                    <span class="badge badge-primary badge-pill">&#8377;<?php echo $trek_price; ?></span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Altitude
-                    <span class="badge badge-primary badge-pill"><?php echo $trek_altitude; ?></span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Type
-                    <span class="badge badge-primary badge-pill"><?php trekTypeNameDisplay($trek_type_id); ?></span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Views
-                    <span class="badge badge-primary badge-pill"><?php echo viewsCount($trek_id); ?></span>
-                  </li>
-                </ul>
-
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       <br>
     </div>
