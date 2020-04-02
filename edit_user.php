@@ -1,15 +1,6 @@
-
 <?php
-  include 'includes/header.php';
-  session_start();
-?>
-<?php include 'includes/functions.php'; ?>
-<?php include 'includes/navigation.php'; ?>
-
-<?php
-if (isset($_GET['user_id'])) {
-  $user_id = $_GET['user_id'];
   if (isset($_POST['update'])) {
+    $user_id = $_SESSION['user_id'];
     $user_firstname   = escape($_POST['user_firstname']);
     $user_lastname    = escape($_POST['user_lastname']);
     $username         = escape($_POST['username']);
@@ -64,54 +55,28 @@ if (isset($_GET['user_id'])) {
 
   }
 ?>
-<h1 class="display-4 text-center mt-3">
-  Edit User
-</h1>
 
-<div class="container my-4">
+<!-- <div class="container my-4"> -->
   <form class="" action="" method="post" enctype="multipart/form-data">
-    <?php
-      $query = "SELECT * FROM users WHERE user_id = $user_id";
-      $select_user = mysqli_query($connection, $query);
-      confirmQuery($select_user);
-      while($row = mysqli_fetch_assoc($select_user)){
-        $user_firstname   = $row['user_firstname'];
-        $user_lastname    = $row['user_lastname'];
-        $username         = $row['username'];
-        $user_email       = $row['user_email'];
-        $user_phonenumber = $row['user_phonenumber'];
-        $user_image       = $row['user_image'];
-        $user_dob         = $row['user_dob'];
-        $ser_password     = $row['user_password'];
-      }
-    ?>
     <div class="row">
       <div class="col-12 col-sm-6 form-group">
         <label for="">Firstname</label>
-        <input type="text" name="user_firstname" class="form-control"
-        value="<?php
-        if(isset($_POST['register'])){
-          echo $_POST['user_firstname'];
-        }else{
-          echo $user_firstname;
-        } ?>">
-        <p class="text-danger">
-          <?php
-            if (isset($error['user_firstname'])) {
-              echo $error['user_firstname'];
-            }
-          ?>
+        <input type="text" name="user_firstname" class="form-control" value="<?php
+          if(isset($_POST['user_firstname'])){
+            echo $_POST['user_firstname'];
+          }else{
+            echo $_SESSION['user_firstname'];
+          } ?>">
         </p>
       </div>
       <div class="col-12 col-sm-6 form-group">
         <label for="">Lastname</label>
-        <input type="text" name="user_lastname" class="form-control"
-        value="<?php
-        if(isset($_POST['register'])){
-          echo $_POST['user_lastname'];
-        }else {
-          echo $user_lastname;
-        } ?>">
+        <input type="text" name="user_lastname" class="form-control" value="<?php
+          if(isset($_POST['user_lastname'])){
+            echo $_POST['user_lastname'];
+          }else{
+            echo $_SESSION['user_lastname'];
+          } ?>">
       </div>
     </div>
 
@@ -119,7 +84,7 @@ if (isset($_GET['user_id'])) {
       <div class="col-12 col-sm-6 form-group">
         <label for="">Username</label>
         <input type="text" name="username" class="form-control"
-        value="<?php echo $username; ?>" readonly>
+        value="<?php echo $_SESSION['username']; ?>" readonly>
         <p class="text-danger">
           <?php
             if (isset($error['username'])) {
@@ -130,7 +95,7 @@ if (isset($_GET['user_id'])) {
       </div>
       <div class="col-12 col-sm-6 form-group">
         <label for="">Email</label>
-        <input type="email" name="user_email" class="form-control" value="<?php echo $user_email; ?>" readonly>
+        <input type="email" name="user_email" class="form-control" value="<?php echo $_SESSION['user_email']; ?>" readonly>
         <p class="text-danger">
           <?php
             if (isset($error['user_email'])) {
@@ -149,7 +114,7 @@ if (isset($_GET['user_id'])) {
           if(isset($_POST['register'])){
             echo $_POST['user_phonenumber'];
           }else{
-            echo $user_phonenumber;
+            echo $_SESSION['user_phonenumber'];
           } ?>">
         <p class="text-danger">
           <?php
@@ -174,7 +139,7 @@ if (isset($_GET['user_id'])) {
         if(isset($_POST['register'])){
           echo $_POST['user_dob'];
         }else{
-          echo $user_dob;
+          echo $_SESSION['user_dob'];
         } ?>">
         <p class="text-danger">
           <?php
@@ -198,6 +163,4 @@ if (isset($_GET['user_id'])) {
     </div>
 
   </form>
-</div>
-<?php }else{ header("Location: ./index.php"); } ?>
-<?php include 'includes/footer.php'; ?>
+<!-- </div> -->
