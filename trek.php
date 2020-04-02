@@ -1,7 +1,5 @@
 <?php
 include 'includes/header.php';
-session_start();
-include 'includes/functions.php';
 include 'includes/navigation.php';
 
 
@@ -19,16 +17,8 @@ if (isset($_GET['trek_id'])) {
     }
   }
 
-  $query = "SELECT treks.trek_id,treks.trek_type_id,treks.trek_organizer_id, ";
-  $query .= "users.user_firstname,users.user_lastname,users.user_image, users.user_phonenumber, ";
-  $query .= "trek_type.trek_type_name,";
-
-  $query .= "treks.trek_name,treks.trek_departure,treks.trek_arrival,treks.trek_about,";
-  $query .= "treks.trek_location,treks.trek_duration,treks.trek_image,";
-  $query .= "treks.trek_altitude,treks.trek_price,treks.trek_status ";
-
+  $query = "SELECT * ";
   $query .= "FROM treks ";
-
   $query .= "INNER JOIN users ON treks.trek_organizer_id = users.user_id ";
   $query .= "INNER JOIN trek_type ON treks.trek_type_id = trek_type.trek_type_id ";
 
@@ -39,8 +29,8 @@ if (isset($_GET['trek_id'])) {
 
   while ($row = mysqli_fetch_assoc($select_trek)) {
     $trek_name         = $row['trek_name'];
-    $trek_departure    = date("d-m-Y", strtotime($row['trek_departure']));
-    $trek_arrival      = date("d-m-Y", strtotime($row['trek_arrival']));
+    $trek_departure    = date("d-M-y", strtotime($row['trek_departure']));
+    $trek_arrival      = date("d-M-y", strtotime($row['trek_arrival']));
     $trek_about        = $row['trek_about'];
     $trek_location     = $row['trek_location'];
     $trek_duration     = $row['trek_duration'];
@@ -50,6 +40,7 @@ if (isset($_GET['trek_id'])) {
     $trek_status       = $row['trek_status'];
     $trek_organizer_id = $row['trek_organizer_id'];
 
+    $user_id           = $row['user_id'];
     $user_firstname    = $row['user_firstname'];
     $user_lastname     = $row['user_lastname'];
     $user_image        = $row['user_image'];
@@ -126,30 +117,59 @@ if (isset($_GET['trek_id'])) {
 
         <p class="lead m-0" style="font-size: 1.5rem;">
 
-          <span style="font-size: 2rem; font-weight: 300;" class="d-flex justify-content-center">
+          <div  class="d-flex justify-content-center">
             <img src="images/<?php echo $user_image; ?>" class="img-fluid rounded rounded-lg" style="height: 45px;">
-            <span style="font-weight: 400;">
+            <span class="ml-2" style="font-size: 2rem; font-weight: 400;">
               <?php echo $user_firstname . " " . $user_lastname; ?>
             </span>
-            :
-            <?php echo $user_phonenumber; ?>
-          </span>
+            <span style="font-size: 2rem; font-weight: 300;">
+              :
+              <?php echo $user_phonenumber; ?>
+            </span>
+            <?php if (!isLoggedOut()): ?>
+              <?php if ($_SESSION['user_id'] != $user_id): ?>
+                <div class="ml-2">
+                  <?php
+                  $followee_id = $_SESSION['user_id'];
+                  $query = mysqli_query($connection, "SELECT * FROM follows WHERE followee_id = $followee_id");
+                  while ($row = mysqli_fetch_assoc($query)) {
+                    $follower_id = $row['follower_id'];
+                    $followee_id = $row['followee_id'];
+                  }
+                  ?>
+                  <a href="./trek.php?trek_id=<?php echo $trek_id; ?>&follow_id=<?php echo $user_id; ?>" class="py-1 badge badge-pill text-light
+                    <?php if ($follower_id == $user_id): ?>
+                      badge-success">
+                      Following
+                    <?php else: ?>
+                      badge-primary">
+                      Follow
+                    <?php endif; ?>
+
+                  </a>
+                </div>
+              <?php endif; ?>
+            <?php endif; ?>
+          </div>
           <br>
 
-          <span style="font-size: 2rem; font-weight: 400;">Altitude : </span>
-          <?php echo $trek_altitude; ?>
-          <br>
+          <div class="" style="font-size: 1.5rem; font-weight: 300;">
 
-          <span style="font-size: 2rem; font-weight: 400;">Cost : </span>
-          &#8377;<?php echo $trek_price; ?>
-          <br>
+            <span style="font-size: 2rem; font-weight: 400;">Altitude : </span>
+            <?php echo $trek_altitude; ?>
+            <br>
 
-          <span style="font-size: 2rem; font-weight: 400;">Location : </span>
-          <?php echo $trek_location; ?>
-          <br>
+            <span style="font-size: 2rem; font-weight: 400;">Cost : </span>
+            &#8377;<?php echo $trek_price; ?>
+            <br>
 
-          <span style="font-size: 2rem; font-weight: 400;">Type : </span>
-          <?php echo $trek_type_name; ?>
+            <span style="font-size: 2rem; font-weight: 400;">Location : </span>
+            <?php echo $trek_location; ?>
+            <br>
+
+            <span style="font-size: 2rem; font-weight: 400;">Type : </span>
+            <?php echo $trek_type_name; ?>
+          </div>
 
           <br>
           <br>
@@ -217,6 +237,14 @@ if (isset($_GET['trek_id'])) {
   <?php
 }else{
   header("Location: ./index.php");
+}
+
+if (isset($_GET['follow_id'])) {
+  $follower_id   = $_GET['follow_id'];
+  $followee_id   = $_SESSION['user_id'];
+
+  $query = mysqli_query($connection, "INSERT INTO follows(follower_id, followee_id) VALUES($follower_id, $followee_id)");
+  header("Location: ./trek.php?trek_id=$trek_id");
 }
 
 if (isset($_POST['interested'])) {

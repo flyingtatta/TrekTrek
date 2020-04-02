@@ -18,7 +18,7 @@ function deleteComment($comment_id, $trek_id){
 function insertIntoComment($user_id, $trek_id, $comment_content){
   global $connection;
 
-  $query = mysqli_query($connection, "INSERT INTO comments(user_id, trek_id, comment_content, comment_date) VALUES($user_id, $trek_id, '$comment_content', now())");
+  $query = mysqli_query($connection, "INSERT INTO comments(user_id, trek_id, comment_content, created_at) VALUES($user_id, $trek_id, '$comment_content', now())");
   confirmQuery($query);
   header("Location: ./trek.php?trek_id=$trek_id");
 }

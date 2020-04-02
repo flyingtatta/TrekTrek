@@ -1,11 +1,7 @@
 <?php
   include 'includes/header.php';
-  session_start();
-?>
-<?php include 'includes/functions.php'; ?>
-<?php include 'includes/navigation.php'; ?>
+  include 'includes/navigation.php';
 
-<?php
   if (isset($_POST['register'])) {
     $user_firstname   = escape($_POST['user_firstname']);
     $user_lastname    = escape($_POST['user_lastname']);
